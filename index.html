@@ -22,9 +22,10 @@
     --maxw:1200px;
   }
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;overflow-x:hidden}
   body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.6;
-    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;width:100%;max-width:100%}
+  img,svg,video{max-width:100%}
   a{color:inherit;text-decoration:none}
   ::selection{background:var(--accent);color:#06120F}
   h1,h2,h3{margin:0;letter-spacing:-.03em;text-wrap:balance;font-weight:700;line-height:1.04}
@@ -82,7 +83,8 @@
 
   /* section kicker — pill w/ glow dot (distinct from numbered eyebrow) */
   .kick{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:2.6px;text-transform:uppercase;
-    color:var(--accent);padding:8px 15px;border:1px solid var(--line-2);border-radius:100px;background:var(--surface);margin-bottom:26px}
+    color:var(--accent);padding:8px 15px;border:1px solid var(--line-2);border-radius:100px;background:var(--surface);margin-bottom:26px;max-width:100%;flex-wrap:wrap}
+  #hero .kick{justify-content:center}
   .kick::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)}
   h2{font-size:clamp(30px,4.6vw,50px)}
   .lead{color:var(--muted);font-size:clamp(16px,1.6vw,18px);max-width:60ch;margin:20px 0 0;line-height:1.6}
@@ -142,7 +144,7 @@
   @keyframes grow{0%,100%{transform:scaleX(.4);opacity:.5}45%{transform:scaleX(1);opacity:1}}
 
   /* MARQUEE — dual-row glassy chips */
-  .marquee{padding:30px 0;display:flex;flex-direction:column;gap:13px;
+  .marquee{padding:30px 0;display:flex;flex-direction:column;gap:13px;overflow:hidden;max-width:100%;
     -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
   .mrow{display:flex;gap:13px;width:max-content}
   .mrow.r1{animation:scrollx 46s linear infinite}
@@ -299,6 +301,8 @@
   }
   @media (max-width:600px){
     section{padding:clamp(56px,9vh,90px) 0}
+    .kick{letter-spacing:1.4px;font-size:10px;padding:7px 12px}
+    .wrap{padding:0 16px}
     .skill-grid,.rec-grid,.frow,.bento{grid-template-columns:1fr}.b-intro,.b-facts{grid-column:span 1}
     .hero-meta{gap:22px 26px}
     #hero{padding-top:36px}
