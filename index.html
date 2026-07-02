@@ -354,35 +354,17 @@
     .form-foot{flex-direction:column;align-items:flex-start;gap:12px}
     .form-foot .btn{width:100%;justify-content:center}
   }
+  /* gentle, consistent bump on the base type for phones (viewport handles the rest) */
   @media (max-width:760px){
-    body{font-size:18px}
-    h2{font-size:clamp(31px,7.6vw,42px)}
-    .kick{font-size:12px;letter-spacing:1.6px}
-    .lead{font-size:19.5px;line-height:1.6}
-    .hero-copy{font-size:19.5px;line-height:1.62}
-    .role{font-size:15.5px}
-    .btn{font-size:17px;padding:16px 26px}
-    .b-intro p{font-size:19px;line-height:1.62}
-    .b-intro p:last-child{font-size:17px}
-    .b-facts .fact{font-size:16.5px}.b-facts .k{font-size:12px}.b-stat span{font-size:15.5px}
-    .skill h3{font-size:19.5px}.skill .sub{font-size:16px}
-    .chips .c,.chip{font-size:14px;padding:7px 12px}
-    .mchip{font-size:15.5px}
-    .job h3{font-size:25px}.job-when{font-size:13px}.job .co{font-size:17px}.job li{font-size:17px}
-    .proj-cat{font-size:12.5px}
-    .proj h3{font-size:clamp(26px,6.8vw,32px)}
-    .proj .desc{font-size:18px;line-height:1.62}
-    .model-pill{font-size:14px}
-    .cell .bh{font-size:13px}.cell p{font-size:17.5px;line-height:1.62}.cell ul li{font-size:17px;line-height:1.55}
-    .proj-stats .st b{font-size:30px}.proj-stats .st span{font-size:14.5px}
-    .impact-quote p{font-size:19px}
-    .rec h3{font-size:18.5px}.rec .rmeta{font-size:12px}.rec p{font-size:17px;line-height:1.6}
-    .cc-label,.form-status{font-size:15px}
-    .cline .ck,.field label{font-size:12px}.cline .cv{font-size:17.5px}
+    body{font-size:16.5px}
+    .lead{font-size:16.5px}
+    .hero-copy{font-size:16.5px}
+    .b-intro p{font-size:16px}
+    .proj .desc{font-size:15px}
+    .cell p{font-size:14.5px}
+    .cell ul li{font-size:14px}
+    .rec p{font-size:14px}
     .field input,.field textarea{font-size:16px}
-    .sc-bar input{font-size:14px}
-    .foot-in{font-size:15px}
-    .mobile-menu a{font-size:18.5px}
   }
   @media (prefers-reduced-motion:reduce){
     *{animation:none!important;scroll-behavior:auto!important}
