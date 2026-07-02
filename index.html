@@ -1,0 +1,724 @@
+<title>Muhammad Bilal — Lead Frontend Engineer</title>
+<style>
+  :root{
+    --bg:#070910;
+    --bg-2:#0A0D15;
+    --surface:rgba(255,255,255,.03);
+    --surface-2:rgba(255,255,255,.055);
+    --line:rgba(255,255,255,.09);
+    --line-2:rgba(255,255,255,.16);
+    --text:#EAEEF5;
+    --text-2:#B6BFCE;
+    --muted:#7A8495;
+    --muted-2:#525B6A;
+    --accent:#2EE6C6;
+    --accent-2:#6E8BFF;
+    --accent-soft:rgba(46,230,198,.12);
+    --claude:#E08A5F;
+    --openai:#19C37D;
+    --gemini:#6AA0FF;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,Roboto,sans-serif;
+    --mono:ui-monospace,"SF Mono","SFMono-Regular",Menlo,Consolas,monospace;
+    --maxw:1200px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent);color:#06120F}
+  h1,h2,h3{margin:0;letter-spacing:-.03em;text-wrap:balance;font-weight:700;line-height:1.04}
+
+  /* ambient bg */
+  .bg{position:fixed;inset:0;z-index:-2;overflow:hidden;background:radial-gradient(130% 90% at 85% -10%,#101828 0%,var(--bg) 55%)}
+  .bg::after{content:"";position:absolute;inset:0;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:70px 70px;opacity:.3;
+    -webkit-mask-image:radial-gradient(85% 55% at 60% 0%,#000,transparent 78%);mask-image:radial-gradient(85% 55% at 60% 0%,#000,transparent 78%)}
+  .orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:.5;will-change:transform}
+  .orb.a{width:540px;height:540px;background:radial-gradient(circle,rgba(46,230,198,.42),transparent 70%);top:-140px;left:-100px;animation:drift1 26s ease-in-out infinite}
+  .orb.b{width:580px;height:580px;background:radial-gradient(circle,rgba(110,139,255,.36),transparent 70%);top:18%;right:-180px;animation:drift2 32s ease-in-out infinite}
+  .orb.c{width:500px;height:500px;background:radial-gradient(circle,rgba(46,230,198,.14),transparent 70%);bottom:-160px;left:32%;animation:drift1 40s ease-in-out infinite reverse}
+  @keyframes drift1{0%,100%{transform:translate(0,0)}50%{transform:translate(70px,50px)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0)}50%{transform:translate(-80px,44px)}}
+
+  .progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:100;background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 0 12px var(--accent)}
+
+  /* nav — minimal full-width bar (no pill) */
+  header{position:sticky;top:0;z-index:80;background:rgba(7,9,16,.55);backdrop-filter:blur(16px) saturate(140%);
+    border-bottom:1px solid transparent;transition:background .3s ease,border-color .3s ease}
+  header.scrolled{background:rgba(7,9,16,.85);border-bottom-color:var(--line)}
+  .navbar{max-width:var(--maxw);margin:0 auto;padding:16px clamp(18px,4vw,40px);display:flex;align-items:center;justify-content:space-between}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:600;font-size:15px}
+  .brand .g{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-family:var(--mono);font-size:13px;font-weight:700;color:#06120F;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 4px 18px rgba(46,230,198,.35)}
+  .brand small{display:block;font-family:var(--mono);font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted);font-weight:500;margin-top:1px}
+  .nav-links{display:flex;gap:26px}
+  .nav-links a{position:relative;font-size:14px;color:var(--muted);padding:4px 0;transition:color .2s ease}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-3px;height:2px;width:0;border-radius:2px;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .28s ease}
+  .nav-links a:hover,.nav-links a.active{color:var(--text)}
+  .nav-links a.active::after,.nav-links a:hover::after{width:100%}
+  .nav-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 17px;border-radius:11px;font-size:13.5px;font-weight:560;color:#06120F;
+    background:linear-gradient(135deg,var(--accent),#4de0cf);transition:transform .2s ease,box-shadow .2s ease}
+  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(46,230,198,.32)}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(18px,4vw,40px)}
+  section{padding:clamp(78px,11vh,132px) 0;position:relative}
+
+  /* section kicker — pill w/ glow dot (distinct from numbered eyebrow) */
+  .kick{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:2.6px;text-transform:uppercase;
+    color:var(--accent);padding:8px 15px;border:1px solid var(--line-2);border-radius:100px;background:var(--surface);margin-bottom:26px}
+  .kick::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)}
+  h2{font-size:clamp(30px,4.6vw,50px)}
+  .lead{color:var(--muted);font-size:clamp(16px,1.6vw,18px);max-width:60ch;margin:20px 0 0;line-height:1.6}
+  .grad{background:linear-gradient(100deg,var(--accent),var(--accent-2) 55%,var(--accent));background-size:200% auto;
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:shine 6s linear infinite}
+  @keyframes shine{to{background-position:200% center}}
+
+  /* HERO — centered statement + full-width showcase */
+  #hero{padding-top:clamp(56px,9vh,104px);padding-bottom:clamp(40px,6vh,72px);text-align:center}
+  #hero .kick{margin-bottom:22px}
+  #hero h1{font-size:clamp(42px,7.4vw,88px);font-weight:760;letter-spacing:-.045em;margin:0 auto}
+  .role{font-family:var(--mono);font-size:clamp(12.5px,1.5vw,15px);letter-spacing:.3px;color:var(--text-2);margin-top:24px}
+  .hero-copy{color:var(--muted);font-size:17.5px;max-width:60ch;margin:20px auto 0;line-height:1.66}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px;justify-content:center}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:14px 24px;border-radius:12px;font-size:14.5px;font-weight:560;cursor:pointer;border:1px solid transparent;
+    transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+  .btn svg{width:16px;height:16px}
+  .btn-primary{color:#06120F;background:linear-gradient(135deg,var(--accent),#54e6d3)}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(46,230,198,.32)}
+  .btn-ghost{background:var(--surface);border-color:var(--line-2);color:var(--text)}
+  .btn-ghost:hover{transform:translateY(-3px);border-color:var(--accent)}
+  .hero-meta{display:flex;gap:40px;margin-top:40px;flex-wrap:wrap;justify-content:center}
+  .hero-meta b{display:block;font-family:var(--mono);font-size:24px;font-weight:700;letter-spacing:-.02em;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero-meta span{font-size:12px;color:var(--muted);display:block;margin-top:4px}
+
+  /* showcase panel — horizontal 3-column parallel models */
+  .showcase{margin-top:clamp(44px,6vw,72px);border-radius:24px;padding:22px;position:relative;overflow:hidden;text-align:left;
+    background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid var(--line-2);
+    box-shadow:0 40px 100px -34px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.07)}
+  .showcase::before{content:"";position:absolute;inset:0;border-radius:24px;padding:1px;pointer-events:none;
+    background:linear-gradient(120deg,rgba(46,230,198,.5),transparent 35%,transparent 65%,rgba(110,139,255,.45));
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+  .sc-bar{display:flex;align-items:center;gap:11px;border:1px solid var(--line-2);border-radius:14px;padding:14px 16px;background:rgba(0,0,0,.4);position:relative;z-index:1}
+  .sc-bar .pi{width:18px;height:18px;color:var(--accent);flex:none}
+  .sc-bar input{border:none;background:none;flex:1;font-family:var(--mono);font-size:13px;color:var(--text-2);outline:none;min-width:0}
+  .sc-bar .tools{display:flex;gap:6px}
+  .sc-bar .tool{font-family:var(--mono);font-size:9px;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:100px;padding:4px 9px}
+  .sc-bar .send{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;flex:none;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+  .sc-bar .send svg{width:15px;height:15px;color:#06120F}
+  .sc-fan{font-family:var(--mono);font-size:10px;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin:18px 4px 12px;display:flex;align-items:center;gap:10px;position:relative;z-index:1}
+  .sc-fan::after{content:"";flex:1;height:1px;background:var(--line)}
+  .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;position:relative;z-index:1}
+  .col{border:1px solid var(--line);border-radius:14px;padding:14px;background:rgba(255,255,255,.02)}
+  .col-head{display:flex;align-items:center;gap:8px;margin-bottom:13px}
+  .mdot{width:9px;height:9px;border-radius:50%;flex:none}
+  .col-head b{font-size:13px;font-weight:600}
+  .col-head .tag{margin-left:auto;font-family:var(--mono);font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted-2)}
+  .col.claude .mdot{background:var(--claude);box-shadow:0 0 9px var(--claude)}
+  .col.openai .mdot{background:var(--openai);box-shadow:0 0 9px var(--openai)}
+  .col.gemini .mdot{background:var(--gemini);box-shadow:0 0 9px var(--gemini)}
+  .ln{height:8px;border-radius:5px;margin-bottom:8px;transform-origin:left;animation:grow 2.6s ease-in-out infinite;background:var(--line-2)}
+  .ln:last-child{margin-bottom:0}
+  .col.claude .ln{background:linear-gradient(90deg,rgba(224,138,95,.55),var(--line));animation-delay:0s}
+  .col.openai .ln{background:linear-gradient(90deg,rgba(25,195,125,.5),var(--line));animation-delay:.35s}
+  .col.gemini .ln{background:linear-gradient(90deg,rgba(106,160,255,.5),var(--line));animation-delay:.7s}
+  @keyframes grow{0%,100%{transform:scaleX(.4);opacity:.5}45%{transform:scaleX(1);opacity:1}}
+
+  /* MARQUEE — dual-row glassy chips */
+  .marquee{padding:30px 0;display:flex;flex-direction:column;gap:13px;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+  .mrow{display:flex;gap:13px;width:max-content}
+  .mrow.r1{animation:scrollx 46s linear infinite}
+  .mrow.r2{animation:scrollx 40s linear infinite reverse}
+  .marquee:hover .mrow{animation-play-state:paused}
+  .mchip{display:inline-flex;align-items:center;gap:10px;padding:11px 19px;border:1px solid var(--line);border-radius:13px;
+    background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));font-family:var(--mono);font-size:13.5px;color:var(--text-2);white-space:nowrap;transition:border-color .2s ease,transform .2s ease,color .2s ease}
+  .mchip:hover{border-color:var(--accent);color:var(--text);transform:translateY(-2px)}
+  .mchip .d{width:8px;height:8px;border-radius:50%;flex:none;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 0 8px rgba(46,230,198,.6)}
+  @keyframes scrollx{to{transform:translateX(-50%)}}
+
+  /* ABOUT bento */
+  .bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(120px,auto);gap:16px;margin-top:38px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;position:relative;overflow:hidden;transition:border-color .3s ease,background .3s ease}
+  .card:hover{border-color:var(--line-2);background:var(--surface-2)}
+  .b-intro{grid-column:span 2;grid-row:span 2}
+  .b-intro p{color:var(--text-2);font-size:16px;line-height:1.68;margin:0 0 16px}
+  .b-intro p:last-child{margin-bottom:0}
+  .b-intro .hl{color:var(--text);font-weight:600}
+  .b-stat{display:flex;flex-direction:column;justify-content:center}
+  .b-stat b{font-size:clamp(30px,3.4vw,42px);font-weight:750;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .b-stat span{font-size:12.5px;color:var(--muted);margin-top:9px}
+  .b-facts{grid-column:span 2}
+  .b-facts .fact{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+  .b-facts .fact:last-child{border-bottom:none}
+  .b-facts .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted)}
+  .b-facts .v{color:var(--text);font-weight:500;text-align:right}
+
+  /* SKILLS */
+  .skill-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+  .skill{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;position:relative;overflow:hidden;transition:transform .3s ease,border-color .3s ease}
+  .skill::before{content:"";position:absolute;inset:0;opacity:0;transition:opacity .3s ease;background:radial-gradient(120% 80% at 50% 0%,var(--accent-soft),transparent 60%)}
+  .skill:hover{transform:translateY(-5px);border-color:var(--line-2)}
+  .skill:hover::before{opacity:1}
+  .skill .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:var(--accent);background:var(--accent-soft);border:1px solid rgba(46,230,198,.2);margin-bottom:15px;position:relative}
+  .skill .ic svg{width:20px;height:20px}
+  .skill h3{font-size:16.5px;font-weight:640;position:relative}
+  .skill .sub{font-size:12.5px;color:var(--muted);margin:6px 0 16px;position:relative}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;position:relative}
+  .chips .c{font-family:var(--mono);font-size:11.5px;color:var(--text-2);background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:8px;padding:5px 9px;transition:border-color .2s ease}
+  .skill:hover .chips .c{border-color:var(--line-2)}
+
+  /* EXPERIENCE timeline */
+  .timeline{margin-top:42px;position:relative;padding-left:34px}
+  .timeline::before{content:"";position:absolute;left:9px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--accent),var(--accent-2),transparent)}
+  .job{position:relative;margin-bottom:20px}
+  .job::before{content:"";position:absolute;left:-34px;top:6px;width:20px;height:20px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);box-shadow:0 0 14px rgba(46,230,198,.5)}
+  .job-inner{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:28px clamp(20px,3vw,32px);transition:border-color .3s ease,background .3s ease}
+  .job-inner:hover{border-color:var(--line-2);background:var(--surface-2)}
+  .job-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:baseline}
+  .job-when{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--accent)}
+  .job h3{font-size:21px;font-weight:680;margin-top:7px}
+  .job .co{color:var(--muted);font-size:14px;margin-top:3px}
+  .job .co b{color:var(--text);font-weight:600}
+  .job ul{margin:18px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:11px 26px}
+  .job li{position:relative;padding-left:20px;font-size:14px;color:var(--text-2);line-height:1.5}
+  .job li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:2px;background:var(--accent);transform:rotate(45deg)}
+
+  /* PROJECTS — header band + 3-col P/Approach/Impact + ghost index */
+  .proj{margin-top:20px;border-radius:22px;position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--line);transition:border-color .35s ease}
+  .proj::after{content:"";position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .4s ease;background:radial-gradient(70% 120% at 100% 0%,var(--accent-soft),transparent 45%)}
+  .proj:hover{border-color:var(--line-2)}
+  .proj:hover::after{opacity:1}
+  .proj-band{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:clamp(26px,3.2vw,38px);border-bottom:1px solid var(--line);position:relative;z-index:1}
+  .proj-idx{position:absolute;top:-14px;right:22px;font-family:var(--mono);font-weight:700;font-size:clamp(70px,10vw,128px);line-height:1;letter-spacing:-.04em;
+    color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.06);pointer-events:none;z-index:0}
+  .proj-cat{font-family:var(--mono);font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--accent)}
+  .proj h3{font-size:clamp(22px,2.7vw,32px);font-weight:720;margin-top:12px;letter-spacing:-.02em;position:relative;z-index:1}
+  .proj .desc{color:var(--muted);font-size:14.5px;margin-top:12px;max-width:62ch;line-height:1.6}
+  .proj-tags{flex:none;max-width:260px;display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-end}
+  .models-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:16px}
+  .model-pill{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-family:var(--mono);border:1px solid var(--line-2);border-radius:100px;padding:5px 11px;color:var(--text-2)}
+  .psi{display:grid;grid-template-columns:repeat(3,1fr);position:relative;z-index:1}
+  .cell{padding:clamp(22px,2.6vw,30px);border-right:1px solid var(--line)}
+  .cell:last-child{border-right:none}
+  .cell .bh{font-family:var(--mono);font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--text);display:flex;align-items:center;gap:9px;margin-bottom:13px}
+  .cell .bh svg{width:14px;height:14px;color:var(--accent)}
+  .cell p{margin:0;font-size:14px;color:var(--text-2);line-height:1.62}
+  .cell ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+  .cell ul li{position:relative;padding-left:20px;font-size:13.5px;color:var(--text-2);line-height:1.5}
+  .cell ul li::before{content:"→";position:absolute;left:0;top:0;color:var(--accent);font-size:12.5px}
+
+  /* RECOGNITION */
+  .rec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:40px}
+  .rec{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;transition:transform .3s ease,border-color .3s ease}
+  .rec:hover{transform:translateY(-4px);border-color:var(--line-2)}
+  .rec .rh{display:flex;align-items:center;gap:13px;margin-bottom:13px}
+  .rec .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:var(--accent);flex:none;background:var(--accent-soft);border:1px solid rgba(46,230,198,.2)}
+  .rec .ic svg{width:19px;height:19px}
+  .rec h3{font-size:16px;font-weight:640}
+  .rec .rmeta{font-family:var(--mono);font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted-2);margin-top:3px}
+  .rec p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.6}
+
+  /* CONTACT */
+  .contact-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(24px,4vw,44px);margin-top:36px;align-items:start}
+  .glass{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid var(--line-2);border-radius:20px;padding:30px}
+  .cc-label{font-family:var(--mono);font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+  .cline{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}
+  .cline:last-child{border-bottom:none}
+  .cline .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;color:var(--accent);flex:none;background:var(--accent-soft);border:1px solid rgba(46,230,198,.2)}
+  .cline .ic svg{width:17px;height:17px}
+  .cline .ck{font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+  .cline .cv{font-size:14.5px;font-weight:520;color:var(--text);word-break:break-word}
+  a.cline:hover .cv{color:var(--accent)}
+  form{display:flex;flex-direction:column;gap:16px}
+  .frow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .field label{font-family:var(--mono);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px}
+  .field input,.field textarea{width:100%;background:rgba(0,0,0,.3);border:1px solid var(--line-2);border-radius:12px;padding:13px 15px;font-family:var(--sans);font-size:14.5px;color:var(--text);outline:none;transition:border-color .2s ease,box-shadow .2s ease}
+  .field textarea{resize:vertical;min-height:120px}
+  .field input:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+  .form-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .form-foot small{color:var(--muted);font-size:12.5px}
+  .form-status{font-size:13px;min-height:18px;color:var(--muted);transition:color .2s ease}
+  .form-status.ok{color:var(--accent)}
+  .form-status.err{color:#ff8b73}
+
+  footer{border-top:1px solid var(--line);padding:30px 0}
+  .foot-in{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+  .foot-in .mono{font-family:var(--mono);font-size:11px;letter-spacing:.4px}
+  .foot-socials{display:flex;gap:9px}
+  .foot-socials a{width:36px;height:36px;border:1px solid var(--line);border-radius:10px;display:grid;place-items:center;color:var(--muted);transition:all .2s ease}
+  .foot-socials a:hover{color:var(--accent);border-color:var(--accent);transform:translateY(-2px)}
+  .foot-socials svg{width:16px;height:16px}
+
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1)}
+  .reveal.in{opacity:1;transform:none}
+  .stagger>*{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .stagger.in>*{opacity:1;transform:none}
+  .stagger.in>*:nth-child(2){transition-delay:.08s}
+  .stagger.in>*:nth-child(3){transition-delay:.16s}
+  .stagger.in>*:nth-child(4){transition-delay:.24s}
+  .stagger.in>*:nth-child(5){transition-delay:.32s}
+  .stagger.in>*:nth-child(6){transition-delay:.4s}
+  .stagger.in>*:nth-child(7){transition-delay:.48s}
+
+  @media (max-width:1000px){
+    .cols{grid-template-columns:1fr;gap:10px}
+    .bento{grid-template-columns:repeat(2,1fr)}.b-intro,.b-facts{grid-column:span 2}
+    .skill-grid{grid-template-columns:repeat(2,1fr)}
+    .proj-band{flex-direction:column}.proj-tags{max-width:none;justify-content:flex-start}
+    .psi{grid-template-columns:1fr}.cell{border-right:none;border-bottom:1px solid var(--line)}.cell:last-child{border-bottom:none}
+    .job ul{grid-template-columns:1fr}
+    .contact-grid{grid-template-columns:1fr}
+    .nav-links{display:none}
+  }
+  @media (max-width:600px){
+    .skill-grid,.rec-grid,.frow,.bento{grid-template-columns:1fr}.b-intro,.b-facts{grid-column:span 1}
+    .hero-meta{gap:26px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;scroll-behavior:auto!important}
+    .reveal,.stagger>*{opacity:1;transform:none;transition:none}
+  }
+</style>
+
+<div class="bg"><div class="orb a"></div><div class="orb b"></div><div class="orb c"></div></div>
+<div class="progress" id="progress"></div>
+
+<header id="hdr">
+  <div class="navbar">
+    <a href="#hero" class="brand"><span class="g">MB</span><span>Muhammad Bilal<small>Lead Frontend Engineer</small></span></a>
+    <nav class="nav-links" id="navlinks">
+      <a href="#about">About</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#projects">Work</a><a href="#recognition">Recognition</a>
+    </nav>
+    <a href="#contact" class="nav-cta">Let's talk<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="wrap">
+      <span class="kick">Lead Frontend Engineer · Angular · AI Interfaces</span>
+      <h1>Interfaces for the<br><span class="grad">multi-model</span> era.</h1>
+      <p class="role">// Lead Frontend Engineer @ Trillo Inc. — 3+ yrs shipping production web &amp; mobile UIs</p>
+      <p class="hero-copy">I lead frontend work in Angular, React &amp; React Native — including a workspace where one prompt queries every major AI model at once. Obsessed with the details users actually feel: speed, clarity and polish.</p>
+      <div class="cta-row">
+        <a href="#projects" class="btn btn-primary">View Case Studies<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="#contact" class="btn btn-ghost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Get in touch</a>
+      </div>
+      <div class="hero-meta">
+        <div><b data-count="3" data-suffix="+">3+</b><span>Years shipping UIs</span></div>
+        <div><b data-count="6" data-suffix="">6</b><span>Case studies below</span></div>
+        <div><b>Web · Mobile</b><span>Angular · React · RN</span></div>
+      </div>
+
+      <!-- showcase -->
+      <div class="showcase reveal" aria-hidden="true">
+        <div class="sc-bar">
+          <svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 12 5 5L20 7"/></svg>
+          <input value="Summarize this contract in plain English…" readonly>
+          <div class="tools"><span class="tool">Dictation</span><span class="tool">Transcription</span><span class="tool">Multi-language</span></div>
+          <span class="send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+        <div class="sc-fan">One prompt → 9–10 models, in parallel</div>
+        <div class="cols">
+          <div class="col claude"><div class="col-head"><span class="mdot"></span><b>Claude</b><span class="tag">streaming</span></div>
+            <div class="ln" style="width:100%"></div><div class="ln" style="width:88%"></div><div class="ln" style="width:72%"></div><div class="ln" style="width:60%"></div></div>
+          <div class="col openai"><div class="col-head"><span class="mdot"></span><b>GPT-4</b><span class="tag">streaming</span></div>
+            <div class="ln" style="width:94%"></div><div class="ln" style="width:78%"></div><div class="ln" style="width:66%"></div></div>
+          <div class="col gemini"><div class="col-head"><span class="mdot"></span><b>Gemini</b><span class="tag">streaming</span></div>
+            <div class="ln" style="width:97%"></div><div class="ln" style="width:82%"></div><div class="ln" style="width:70%"></div><div class="ln" style="width:55%"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee">
+    <div class="mrow r1">
+      <span class="mchip"><span class="d"></span>Angular 18</span><span class="mchip"><span class="d"></span>TypeScript</span><span class="mchip"><span class="d"></span>RxJS</span><span class="mchip"><span class="d"></span>NgRx</span><span class="mchip"><span class="d"></span>Signals</span><span class="mchip"><span class="d"></span>React</span><span class="mchip"><span class="d"></span>React Native</span><span class="mchip"><span class="d"></span>Tailwind CSS</span>
+      <span class="mchip"><span class="d"></span>Angular 18</span><span class="mchip"><span class="d"></span>TypeScript</span><span class="mchip"><span class="d"></span>RxJS</span><span class="mchip"><span class="d"></span>NgRx</span><span class="mchip"><span class="d"></span>Signals</span><span class="mchip"><span class="d"></span>React</span><span class="mchip"><span class="d"></span>React Native</span><span class="mchip"><span class="d"></span>Tailwind CSS</span>
+    </div>
+    <div class="mrow r2">
+      <span class="mchip"><span class="d"></span>Redux</span><span class="mchip"><span class="d"></span>Firebase</span><span class="mchip"><span class="d"></span>Chart.js</span><span class="mchip"><span class="d"></span>Apache ECharts</span><span class="mchip"><span class="d"></span>Streaming UI</span><span class="mchip"><span class="d"></span>REST APIs</span><span class="mchip"><span class="d"></span>Git / Bitbucket</span><span class="mchip"><span class="d"></span>Terraform</span><span class="mchip"><span class="d"></span>DevOps</span><span class="mchip"><span class="d"></span>Jira / Agile</span>
+      <span class="mchip"><span class="d"></span>Redux</span><span class="mchip"><span class="d"></span>Firebase</span><span class="mchip"><span class="d"></span>Chart.js</span><span class="mchip"><span class="d"></span>Apache ECharts</span><span class="mchip"><span class="d"></span>Streaming UI</span><span class="mchip"><span class="d"></span>REST APIs</span><span class="mchip"><span class="d"></span>Git / Bitbucket</span><span class="mchip"><span class="d"></span>Terraform</span><span class="mchip"><span class="d"></span>DevOps</span><span class="mchip"><span class="d"></span>Jira / Agile</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap reveal">
+      <span class="kick">About</span>
+      <h2>Frontend leadership with a<br>designer's eye for the details.</h2>
+      <div class="bento">
+        <div class="card b-intro">
+          <p>I'm a lead frontend engineer who lives at the seam where design meets code. Over <span class="hl">3+ years</span> I've shipped responsive web apps and cross-platform mobile experiences — building interactive UI components, owning architecture, and integrating APIs so products feel fast and effortless.</p>
+          <p>Today I lead frontend work at <span class="hl">Trillo Inc.</span>, an AI-powered application platform, turning dense requirements into clean, accessible interfaces. My toolkit centres on <span class="hl">Angular, React &amp; React Native</span> with TypeScript, backed by a real respect for performance and accessibility.</p>
+          <p style="color:var(--muted);font-size:14.5px">BS Computer Science · International Islamic University Islamabad. Fluent in English, Urdu &amp; Punjabi.</p>
+        </div>
+        <div class="card b-stat"><b data-count="3" data-suffix="+">3+</b><span>Years shipping production UIs</span></div>
+        <div class="card b-stat"><b data-count="6" data-suffix="">6</b><span>Frontend case studies</span></div>
+        <div class="card b-facts">
+          <div class="fact"><span class="k">Currently</span><span class="v">Trillo Inc.</span></div>
+          <div class="fact"><span class="k">Role</span><span class="v">Lead Frontend Engineer</span></div>
+          <div class="fact"><span class="k">Domains</span><span class="v">AI · Analytics · Dev Tools · Mobile</span></div>
+          <div class="fact"><span class="k">Open to</span><span class="v">Remote · Lead frontend roles</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap reveal">
+      <span class="kick">Skills</span>
+      <h2>A toolkit for building<br>interfaces people trust.</h2>
+      <p class="lead">Grouped by what they actually do — not by buzzword count. Everything here has shipped in production web or mobile apps.</p>
+      <div class="skill-grid stagger">
+        <div class="skill">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m8 6-6 6 6 6M16 6l6 6-6 6"/></svg></span>
+          <h3>Frontend Core</h3><p class="sub">The frameworks I build with daily</p>
+          <div class="chips"><span class="c">Angular 18</span><span class="c">React</span><span class="c">TypeScript</span><span class="c">JavaScript ES6+</span><span class="c">Signals</span><span class="c">RxJS</span></div>
+        </div>
+        <div class="skill">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span>
+          <h3>Cross-Platform Mobile</h3><p class="sub">Native-feeling apps from one codebase</p>
+          <div class="chips"><span class="c">React Native</span><span class="c">iOS</span><span class="c">Android</span><span class="c">Responsive</span></div>
+        </div>
+        <div class="skill">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="3.4"/></svg></span>
+          <h3>AI Interfaces</h3><p class="sub">Front-of-house for multi-model products</p>
+          <div class="chips"><span class="c">Multi-model UX</span><span class="c">Streaming</span><span class="c">Dictation</span><span class="c">Transcription</span><span class="c">REST APIs</span></div>
+        </div>
+        <div class="skill">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="m7 14 3-4 3 3 4-6"/></svg></span>
+          <h3>Data Visualization</h3><p class="sub">Interactive, performant analytics UIs</p>
+          <div class="chips"><span class="c">Chart.js</span><span class="c">Apache ECharts</span><span class="c">Virtualized lists</span><span class="c">Firebase</span></div>
+        </div>
+        <div class="skill">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9M4 20V4h11l5 5v3"/><path d="M14 4v5h5"/></svg></span>
+          <h3>UI, Styling &amp; Performance</h3><p class="sub">Pixel-honest, accessible, fast</p>
+          <div class="chips"><span class="c">Tailwind CSS</span><span class="c">Lazy loading</span><span class="c">Code splitting</span><span class="c">OnPush</span><span class="c">WCAG / a11y</span></div>
+        </div>
+        <div class="skill">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3v12M18 9v12"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg></span>
+          <h3>Workflow &amp; Leadership</h3><p class="sub">How the work ships, at team scale</p>
+          <div class="chips"><span class="c">Git · GitHub</span><span class="c">Bitbucket</span><span class="c">Jira / Agile</span><span class="c">Code Review</span><span class="c">Mentorship</span></div>
+        </div>
+        <div class="skill">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17.5 19a4.5 4.5 0 0 0 .5-8.97A6 6 0 0 0 6.34 9 4.5 4.5 0 0 0 7 18h1"/><path d="M12 12v9M9 15l3-3 3 3M9 18l3-3 3 3"/></svg></span>
+          <h3>DevOps &amp; Cloud</h3><p class="sub">Getting builds live and keeping them healthy</p>
+          <div class="chips"><span class="c">Terraform</span><span class="c">Scale workloads ↑ / ↓</span><span class="c">Deploy versioning</span><span class="c">Python scripts</span><span class="c">Workload updates</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="wrap reveal">
+      <span class="kick">Experience</span>
+      <h2>Where the work has<br>actually shipped.</h2>
+      <p class="lead">Roles measured by what got built, delivered, and kept running for real users.</p>
+      <div class="timeline">
+        <div class="job">
+          <div class="job-inner">
+            <div class="job-top"><span class="job-when">Jun 2023 — Present</span>
+              <div class="chips"><span class="c">Angular</span><span class="c">React Native</span><span class="c">TypeScript</span><span class="c">Redux</span></div></div>
+            <h3>Lead Frontend Engineer</h3>
+            <div class="co"><b>Trillo Inc.</b> · AI-powered application platform</div>
+            <ul>
+              <li>Lead frontend work on responsive web apps with HTML5, CSS3 &amp; JavaScript (ES6+) for full cross-device compatibility.</li>
+              <li>Build interactive Angular UI components and manage complex state efficiently with Redux.</li>
+              <li>Ship cross-platform mobile apps in React Native, refining UX across iOS and Android.</li>
+              <li>Optimize performance through lazy loading and code splitting for faster loads.</li>
+              <li>Partner with designers and backend engineers to integrate APIs and refine interfaces.</li>
+              <li>Own accessibility and cross-browser compatibility, adhering to WCAG standards.</li>
+              <li>Handle DevOps tasks — scaling workloads up/down, updating Terraform files &amp; Python scripts, and managing deploy versions.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="job">
+          <div class="job-inner">
+            <div class="job-top"><span class="job-when">Jun 2022 — May 2023</span>
+              <div class="chips"><span class="c">React Native</span><span class="c">PHP / Laravel</span><span class="c">WordPress</span></div></div>
+            <h3>Software Engineer</h3>
+            <div class="co"><b>EarthLink Developments</b></div>
+            <ul>
+              <li>Managed and optimized the company website (PHP / Laravel) for performance and security.</li>
+              <li>Developed and customized WordPress sites for multiple departments' needs.</li>
+              <li>Maintained and upgraded the company's React Native app, improving features and performance.</li>
+              <li>Led implementation and optimization of key features for a seamless cross-platform experience.</li>
+              <li>Worked with cross-functional teams to define and ship impactful web &amp; mobile features.</li>
+              <li>Proposed and presented ideas for new development projects.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="wrap reveal">
+      <span class="kick">Selected Work</span>
+      <h2>Case studies, not screenshots.</h2>
+      <p class="lead">Each project is broken into the problem it solved, the frontend approach I took, and the impact it delivered.</p>
+
+      <!-- 01 Multi-AI -->
+      <article class="proj">
+        <div class="proj-band">
+          <span class="proj-idx">01</span>
+          <div><span class="proj-cat">AI Workspace · Frontend Lead</span>
+            <h3>Multi-Model AI Workspace</h3>
+            <p class="desc">An Angular workspace where a single query fans out to 9–10 AI models at once — Claude, GPT, Gemini and more, side by side — so users compare answers in one glance instead of hopping between tools.</p>
+            <div class="models-row">
+              <span class="model-pill"><span class="mdot" style="background:var(--claude)"></span>Claude</span>
+              <span class="model-pill"><span class="mdot" style="background:var(--openai)"></span>OpenAI</span>
+              <span class="model-pill"><span class="mdot" style="background:var(--gemini)"></span>Gemini</span>
+              <span class="model-pill"><span class="mdot" style="background:linear-gradient(135deg,var(--accent),var(--accent-2))"></span>+6–7 more</span>
+            </div>
+          </div>
+          <div class="proj-tags chips"><span class="c">Angular</span><span class="c">TypeScript</span><span class="c">RxJS</span><span class="c">Streaming UI</span><span class="c">Web Speech</span></div>
+        </div>
+        <div class="psi">
+          <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>Problem</div>
+            <p>Comparing AI models meant juggling several tabs, re-typing the same prompt into each, and stitching answers together by hand. There was no single place to ask once and see how every model responded.</p></div>
+          <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m14 7 3 3M5 19l1-4 9-9 3 3-9 9-4 1z"/></svg>Frontend approach</div>
+            <p>I led the Angular frontend: a workspace that broadcasts one query to 9–10 models simultaneously and renders each reply as a live, streaming chat panel side by side — plus hands-free dictation and transcription with multi-language support, wired cleanly into the backend AI services.</p></div>
+          <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v6h-6"/></svg>Impact</div>
+            <ul><li>Ask once, compare every model's answer in one view</li><li>Parallel streaming chats replaced tab-hopping</li><li>Hands-free input via dictation &amp; transcription</li><li>Multi-language support widened who could use it</li></ul></div>
+        </div>
+      </article>
+
+      <!-- 02 Trillo AI Platform -->
+      <article class="proj">
+        <div class="proj-band">
+          <span class="proj-idx">02</span>
+          <div><span class="proj-cat">AI Platform · Enterprise · Google Cloud Premier Partner</span>
+            <h3>Trillo AI Platform</h3>
+            <p class="desc">Frontend for Trillo AI — an application platform that turns plain-English requirements into running, enterprise-class apps: auth, database, APIs, workflows and agents. Deploy on Trillo AOS in one click, or generate full-stack code you own.</p></div>
+          <div class="proj-tags chips"><span class="c">Angular</span><span class="c">TypeScript</span><span class="c">Tailwind CSS</span><span class="c">RESTful APIs</span><span class="c">Responsive UI</span></div>
+        </div>
+        <div class="psi">
+          <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>Problem</div>
+            <p>Work that traditionally takes 6–12 months needed to ship in days — without CI/CD, DevOps or cloud complexity. Both technical and non-technical users had to move from a plain-English description → blueprint → deployed app, all through one coherent product surface.</p></div>
+          <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m14 7 3 3M5 19l1-4 9-9 3 3-9 9-4 1z"/></svg>Frontend approach</div>
+            <p>I built responsive Angular &amp; TypeScript interfaces across the platform's <em>describe → blueprint &amp; code → deploy</em> flow — the requirement input, generated spec and blueprint views, and the two build paths (managed deploy on Trillo AOS vs. full-stack code generation). Integrated platform APIs and kept it fast with lazy loading and code splitting.</p></div>
+          <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v6h-6"/></svg>Impact</div>
+            <ul><li>Part of a platform trusted by 1,000+ teams, 100+ customers</li><li>Enterprise-class from day one — Google Cloud Premier Partner</li><li>Plain-English → deployed backend (auth, DB, APIs, agents) in minutes</li><li>One surface for both managed AOS deploys and full code ownership</li></ul></div>
+        </div>
+      </article>
+
+      <!-- 03 AI Doc Search -->
+      <article class="proj">
+        <div class="proj-band">
+          <span class="proj-idx">03</span>
+          <div><span class="proj-cat">AI Search · Climate Tech</span>
+            <h3>AI Document Search Engine</h3>
+            <p class="desc">A semantic document search and retrieval experience for a climate-tech nonprofit — turning a sprawling corpus of policy, program and incentive docs into instant answers grounded in their source passages.</p></div>
+          <div class="proj-tags chips"><span class="c">Semantic Search</span><span class="c">Vector Embeddings</span><span class="c">RAG Pipeline</span><span class="c">Retrieval API</span></div>
+        </div>
+        <div class="psi">
+          <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>Problem</div>
+            <p>The client's research and program documents had grown into a large, unstructured corpus. Stakeholders spent hours digging through PDFs for clauses, rebates and program details — and keyword search fell short, since the same idea gets phrased a dozen ways across revisions.</p></div>
+          <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m14 7 3 3M5 19l1-4 9-9 3 3-9 9-4 1z"/></svg>Frontend approach</div>
+            <p>I helped deliver the search experience behind their existing product UI — ingestion and chunking, vector embeddings, a semantically indexed retrieval layer, and a clean API returning ranked passages with grounded citations, tuned for the shape of policy and incentive content.</p></div>
+          <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v6h-6"/></svg>Impact</div>
+            <ul><li>Hours of manual hunting compressed into seconds of search</li><li>Citation-backed answers link straight to the source passage</li><li>Indexing ingests a growing corpus without manual curation</li><li>Drop-in API integrated cleanly with the existing product</li></ul></div>
+        </div>
+      </article>
+
+      <!-- 04 Data Viz -->
+      <article class="proj">
+        <div class="proj-band">
+          <span class="proj-idx">04</span>
+          <div><span class="proj-cat">Analytics · Enterprise</span>
+            <h3>Data Visualization Platform</h3>
+            <p class="desc">Migration of 60+ Looker Studio charts into a fully owned, high-performance Angular analytics product.</p></div>
+          <div class="proj-tags chips"><span class="c">Angular 18</span><span class="c">Signals</span><span class="c">Chart.js</span><span class="c">Apache ECharts</span><span class="c">TypeScript</span></div>
+        </div>
+        <div class="psi">
+          <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>Problem</div>
+            <p>The business leaned on 15+ Looker Studio reports that were slow to load, costly to license, and impossible to extend. Stakeholders needed deep customization, embeddable views and tighter integration with internal data.</p></div>
+          <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m14 7 3 3M5 19l1-4 9-9 3 3-9 9-4 1z"/></svg>Frontend approach</div>
+            <p>I built a modular charting layer wrapping Chart.js and Apache ECharts behind one unified Angular API — lazy-loaded report modules, virtualized lists for large datasets, and OnPush + Signals to keep change detection cheap. Reusable primitives dropped new chart types in days.</p></div>
+          <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v6h-6"/></svg>Impact</div>
+            <ul><li>60+ charts across 15+ reports migrated with full parity</li><li>Significant load-time and interactivity gains</li><li>Eliminated the recurring Looker Studio licensing cost</li><li>Unified API let new report types ship in days, not weeks</li></ul></div>
+        </div>
+      </article>
+
+      <!-- 05 Trillo Workbench -->
+      <article class="proj">
+        <div class="proj-band">
+          <span class="proj-idx">05</span>
+          <div><span class="proj-cat">AI Platform · Developer Tools</span>
+            <h3>Trillo Backend Workbench</h3>
+            <p class="desc">An IDE-style backend workbench for Trillo.ai where developers compose, test and deploy AI-powered workflows. The same foundation later powered the Trillo File Manager product.</p></div>
+          <div class="proj-tags chips"><span class="c">Angular 18</span><span class="c">Signals</span><span class="c">NgRx</span><span class="c">TypeScript</span><span class="c">Virtualization</span></div>
+        </div>
+        <div class="psi">
+          <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>Problem</div>
+            <p>Trillo's customers were constantly context-switching between editors, runtime logs, AI prompt tools and admin consoles. The product needed one workspace that felt as responsive as a desktop IDE — without ballooning the bundle or fighting change detection at scale.</p></div>
+          <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m14 7 3 3M5 19l1-4 9-9 3 3-9 9-4 1z"/></svg>Frontend approach</div>
+            <p>I helped architect the workbench around lazy-loaded feature modules, Signals + OnPush for surgical re-renders, and a virtualized log/console layer that holds tens of thousands of entries without dropping frames. Reusable layout primitives extended cleanly into the File Manager.</p></div>
+          <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v6h-6"/></svg>Impact</div>
+            <ul><li>IDE-style UX — split panes, live logs, AI tooling — without lag</li><li>New feature surfaces shipped in days, not weeks</li><li>Became a core surface for Trillo's developer customers</li><li>Architecture reused for the Trillo File Manager spin-off</li></ul></div>
+        </div>
+      </article>
+
+      <!-- 06 Molecule PMS -->
+      <article class="proj">
+        <div class="proj-band">
+          <span class="proj-idx">06</span>
+          <div><span class="proj-cat">Project Management · AI-Built</span>
+            <h3>Molecule Hierarchy PMS</h3>
+            <p class="desc">A complex hierarchical project-management platform modeled on molecule-style decomposition, where every node can branch into deeply nested sub-projects.</p></div>
+          <div class="proj-tags chips"><span class="c">Next.js</span><span class="c">React</span><span class="c">TypeScript</span><span class="c">Tailwind</span><span class="c">Firebase</span></div>
+        </div>
+        <div class="psi">
+          <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>Problem</div>
+            <p>Teams running multi-layered programs were juggling spreadsheets and flat task lists that hid critical relationships. They needed to see how parent goals decomposed into child workstreams — and back — without losing context across hundreds of nodes.</p></div>
+          <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m14 7 3 3M5 19l1-4 9-9 3 3-9 9-4 1z"/></svg>Frontend approach</div>
+            <p>Built end-to-end with an AI pair-programming workflow: a Next.js + TypeScript app with a virtualized hierarchy renderer, drag-and-drop reorganization, role-based permissions and real-time collaboration. The architecture stayed human-driven while AI accelerated iteration.</p></div>
+          <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v6h-6"/></svg>Impact</div>
+            <ul><li>Production launch in a fraction of the typical timeline</li><li>Hundreds of nodes rendered smoothly via virtualization</li><li>Drag-and-drop reorg with optimistic updates &amp; conflict resolution</li><li>Replaced spreadsheet workflows with a single source of truth</li></ul></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- RECOGNITION -->
+  <section id="recognition">
+    <div class="wrap reveal">
+      <span class="kick">Recognition</span>
+      <h2>Education, certifications<br>&amp; the essentials.</h2>
+      <div class="rec-grid stagger">
+        <div class="rec"><div class="rh"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1 3 3 6 3s6-2 6-3v-5"/></svg></span>
+          <div><h3>BS Computer Science</h3><div class="rmeta">Int'l Islamic University Islamabad · 2018–2022</div></div></div>
+          <p>A four-year computer-science degree — foundations in programming, data structures, algorithms and software engineering.</p></div>
+        <div class="rec"><div class="rh"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="6"/><path d="M9 13.5 8 22l4-2 4 2-1-8.5"/></svg></span>
+          <div><h3>Deloitte Technology Program</h3><div class="rmeta">Forage · Australia · Aug 2024</div></div></div>
+          <p>Completed Deloitte's Technology Virtual Experience Program — hands-on tasks modelled on real engineering work.</p></div>
+        <div class="rec"><div class="rh"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="6"/><path d="M9 13.5 8 22l4-2 4 2-1-8.5"/></svg></span>
+          <div><h3>Lyft Back-End Engineering</h3><div class="rmeta">Forage · United States · Aug 2024</div></div></div>
+          <p>Lyft's Back-End Engineering Virtual Experience Program — broadening beyond the frontend into API and server-side thinking.</p></div>
+        <div class="rec"><div class="rh"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 8h14M8 8v13M16 8v13M5 21h14M5 5h14"/></svg></span>
+          <div><h3>Languages &amp; Strengths</h3><div class="rmeta">Communication across teams</div></div></div>
+          <p>English (fluent) · Urdu (native) · Punjabi (fluent) — plus strong problem-solving, leadership, adaptability and a habit of picking up new tools fast.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap reveal">
+      <span class="kick">Contact</span>
+      <h2>Let's build something<br>fast and well-crafted.</h2>
+      <p class="lead">Hiring for a lead frontend role, starting a new Angular or React product, or need a UI that finally feels right? I'd love to talk.</p>
+      <div class="contact-grid">
+        <div class="glass">
+          <div class="cc-label">Direct</div>
+          <a class="cline" href="mailto:original.muhammadbilal@gmail.com"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+            <div><div class="ck">Email</div><div class="cv">original.muhammadbilal@gmail.com</div></div></a>
+          <a class="cline" href="tel:+923485165570"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 9.5a16 16 0 0 0 6 6l1.1-1.1a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z"/></svg></span>
+            <div><div class="ck">Phone</div><div class="cv">+92 348 5165570</div></div></a>
+          <a class="cline" href="https://www.linkedin.com/in/muhammad-bilal-08b644224" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM3.2 8.5h3.5V21H3.2V8.5zM9 8.5h3.35v1.7h.05c.47-.88 1.6-1.8 3.3-1.8 3.53 0 4.18 2.32 4.18 5.34V21h-3.5v-5.35c0-1.28-.02-2.92-1.78-2.92-1.78 0-2.05 1.4-2.05 2.83V21H9V8.5z"/></svg></span>
+            <div><div class="ck">LinkedIn</div><div class="cv">/in/muhammad-bilal</div></div></a>
+          <div class="cline"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+            <div><div class="ck">Location</div><div class="cv">Islamabad, Pakistan · Remote-ready</div></div></div>
+        </div>
+        <div class="glass">
+          <div class="cc-label">Send a message</div>
+          <form id="contactForm">
+            <!-- Web3Forms: replace the value below with your own access key from https://web3forms.com -->
+            <input type="hidden" name="access_key" value="b9a3c829-9adf-4bf1-9249-efe7e5d42bab">
+            <input type="hidden" name="subject" value="New message from your portfolio">
+            <input type="hidden" name="from_name" value="Portfolio · muhammadbilal">
+            <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+            <div class="frow">
+              <div class="field"><label for="n">Name</label><input id="n" name="name" placeholder="Jane Doe" required></div>
+              <div class="field"><label for="e">Email</label><input id="e" name="email" type="email" placeholder="jane@company.com" required></div>
+            </div>
+            <div class="field"><label for="m">Message</label><textarea id="m" name="message" placeholder="Tell me about the role or project…" required></textarea></div>
+            <div class="form-foot"><span id="formStatus" class="form-status">Sends straight to my inbox — usually a reply within a day.</span>
+              <button type="submit" class="btn btn-primary">Send Message<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap foot-in">
+      <span>© 2026 Muhammad Bilal · Lead Frontend Engineer</span>
+      <span class="mono">Designed &amp; hand-built · Angular-minded</span>
+      <div class="foot-socials">
+        <a href="mailto:original.muhammadbilal@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+        <a href="https://www.linkedin.com/in/muhammad-bilal-08b644224" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM3.2 8.5h3.5V21H3.2V8.5zM9 8.5h3.35v1.7h.05c.47-.88 1.6-1.8 3.3-1.8 3.53 0 4.18 2.32 4.18 5.34V21h-3.5v-5.35c0-1.28-.02-2.92-1.78-2.92-1.78 0-2.05 1.4-2.05 2.83V21H9V8.5z"/></svg></a>
+        <a href="tel:+923485165570" aria-label="Phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 9.5a16 16 0 0 0 6 6l1.1-1.1a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z"/></svg></a>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<script>
+  const rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prog = document.getElementById('progress'), hdr = document.getElementById('hdr');
+  addEventListener('scroll', () => {
+    const h = document.documentElement;
+    prog.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+    hdr.classList.toggle('scrolled', h.scrollTop > 12);
+  }, {passive:true});
+
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal,.stagger').forEach(el => io.observe(el));
+
+  const cio = new IntersectionObserver((es) => {
+    es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target, end = +el.dataset.count, sfx = el.dataset.suffix || '';
+      if (rm) { el.textContent = end + sfx; cio.unobserve(el); return; }
+      let t0 = null;
+      const step = (ts) => { if (!t0) t0 = ts; const k = Math.min((ts - t0) / 900, 1);
+        el.textContent = Math.round(end * (1 - Math.pow(1 - k, 3))) + sfx; if (k < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step); cio.unobserve(el);
+    });
+  }, {threshold:.6});
+  document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
+
+  const links = [...document.querySelectorAll('#navlinks a')];
+  const spy = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id)); });
+  }, {rootMargin:'-45% 0px -50% 0px'});
+  document.querySelectorAll('main section[id]').forEach(s => spy.observe(s));
+
+  const form = document.getElementById('contactForm');
+  const statusEl = document.getElementById('formStatus');
+  const mailtoFallback = (f) => {
+    const subject = encodeURIComponent('Portfolio enquiry from ' + (f.name.value || 'someone'));
+    const body = encodeURIComponent((f.message.value || '') + '\n\n— ' + (f.name.value || '') + ' (' + (f.email.value || '') + ')');
+    location.href = 'mailto:original.muhammadbilal@gmail.com?subject=' + subject + '&body=' + body;
+  };
+  form.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    statusEl.textContent = 'Sending…'; statusEl.className = 'form-status';
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', { method:'POST', body: new FormData(form) });
+      const json = await res.json();
+      if (!json.success) throw new Error(json.message || 'send failed');
+      statusEl.textContent = '✓ Thanks — your message was sent.'; statusEl.className = 'form-status ok';
+      form.reset();
+    } catch (err) {
+      // network blocked (e.g. preview) or key not set yet → open the visitor's mail app instead
+      statusEl.textContent = 'Opening your mail app…'; statusEl.className = 'form-status';
+      mailtoFallback(form);
+    }
+  });
+</script>
