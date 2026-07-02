@@ -62,6 +62,20 @@
   .nav-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 17px;border-radius:11px;font-size:13.5px;font-weight:560;color:#06120F;
     background:linear-gradient(135deg,var(--accent),#4de0cf);transition:transform .2s ease,box-shadow .2s ease}
   .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(46,230,198,.32)}
+  .burger{display:none;flex-direction:column;gap:5px;align-items:center;justify-content:center;width:44px;height:44px;
+    border:1px solid var(--line-2);border-radius:11px;background:var(--surface);cursor:pointer;padding:0}
+  .burger span{width:19px;height:2px;border-radius:2px;background:var(--text);transition:transform .3s ease,opacity .2s ease}
+  .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .mobile-menu{display:none;flex-direction:column;overflow:hidden;max-height:0;
+    padding:0 clamp(18px,4vw,40px);background:rgba(7,9,16,.97);backdrop-filter:blur(16px);
+    border-bottom:1px solid transparent;transition:max-height .35s ease,padding .35s ease,border-color .35s ease}
+  .mobile-menu.open{max-height:420px;padding-top:6px;padding-bottom:16px;border-bottom-color:var(--line)}
+  .mobile-menu a{padding:14px 2px;font-size:15.5px;color:var(--text-2);border-bottom:1px solid var(--line)}
+  .mobile-menu a:active{color:var(--accent)}
+  .mobile-menu .mm-cta{margin-top:14px;border-bottom:none;text-align:center;color:#06120F;font-weight:600;padding:14px;border-radius:12px;
+    background:linear-gradient(135deg,var(--accent),#4de0cf)}
 
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(18px,4vw,40px)}
   section{padding:clamp(78px,11vh,132px) 0;position:relative}
@@ -79,7 +93,7 @@
   /* HERO — centered statement + full-width showcase */
   #hero{padding-top:clamp(56px,9vh,104px);padding-bottom:clamp(40px,6vh,72px);text-align:center}
   #hero .kick{margin-bottom:22px}
-  #hero h1{font-size:clamp(42px,7.4vw,88px);font-weight:760;letter-spacing:-.045em;margin:0 auto}
+  #hero h1{font-size:clamp(34px,7.4vw,88px);font-weight:760;letter-spacing:-.045em;margin:0 auto}
   .role{font-family:var(--mono);font-size:clamp(12.5px,1.5vw,15px);letter-spacing:.3px;color:var(--text-2);margin-top:24px}
   .hero-copy{color:var(--muted);font-size:17.5px;max-width:60ch;margin:20px auto 0;line-height:1.66}
   .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px;justify-content:center}
@@ -273,11 +287,26 @@
     .psi{grid-template-columns:1fr}.cell{border-right:none;border-bottom:1px solid var(--line)}.cell:last-child{border-bottom:none}
     .job ul{grid-template-columns:1fr}
     .contact-grid{grid-template-columns:1fr}
-    .nav-links{display:none}
+    .nav-links,.navbar .nav-cta{display:none}
+    .burger{display:flex}
+    .mobile-menu{display:flex}
+    .proj-idx{font-size:76px;top:-6px;right:16px}
   }
   @media (max-width:600px){
+    section{padding:clamp(56px,9vh,90px) 0}
     .skill-grid,.rec-grid,.frow,.bento{grid-template-columns:1fr}.b-intro,.b-facts{grid-column:span 1}
-    .hero-meta{gap:26px}
+    .hero-meta{gap:22px 26px}
+    #hero{padding-top:36px}
+    .sc-bar{flex-wrap:wrap;gap:9px}
+    .sc-bar input{order:-1;flex-basis:100%}
+    .sc-bar .tools{display:none}
+    .sc-bar .send{margin-left:auto}
+    .glass{padding:22px}
+    .proj-band,.cell{padding:22px}
+    .proj-idx{font-size:60px;top:-4px;right:12px}
+    .proj h3{margin-top:8px}
+    .form-foot{flex-direction:column;align-items:flex-start;gap:12px}
+    .form-foot .btn{width:100%;justify-content:center}
   }
   @media (prefers-reduced-motion:reduce){
     *{animation:none!important;scroll-behavior:auto!important}
@@ -295,6 +324,15 @@
       <a href="#about">About</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#projects">Work</a><a href="#recognition">Recognition</a>
     </nav>
     <a href="#contact" class="nav-cta">Let's talk<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Work</a>
+    <a href="#recognition">Recognition</a>
+    <a href="#contact" class="mm-cta">Let's talk</a>
   </div>
 </header>
 
@@ -669,6 +707,16 @@
 <script>
   const rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const prog = document.getElementById('progress'), hdr = document.getElementById('hdr');
+
+  // mobile menu
+  const burger = document.getElementById('burger'), mobileMenu = document.getElementById('mobileMenu');
+  const closeMenu = () => { burger.classList.remove('open'); mobileMenu.classList.remove('open'); burger.setAttribute('aria-expanded','false'); };
+  burger.addEventListener('click', () => {
+    const open = !burger.classList.contains('open');
+    burger.classList.toggle('open', open); mobileMenu.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
   addEventListener('scroll', () => {
     const h = document.documentElement;
     prog.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
