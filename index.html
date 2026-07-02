@@ -339,12 +339,13 @@
     .wrap{padding:0 16px}
     .skill-grid,.rec-grid,.frow,.bento{grid-template-columns:1fr}.b-intro,.b-facts{grid-column:span 1}
     .hero-meta{gap:22px 26px}
-    #hero{padding-top:40px;text-align:center}
-    #hero .kick{justify-content:center}
-    .hero-text{max-width:none}
-    .hero-copy{margin-left:auto;margin-right:auto}
-    .cta-row,.hero-meta{justify-content:center}
-    .hero-photo{position:relative;width:150px;height:150px;border-radius:50%;margin:0 auto 26px;opacity:1;background-size:cover;background-repeat:no-repeat;background-position:center 18%;filter:grayscale(1) contrast(1.03);border:2px solid rgba(255,255,255,.16);box-shadow:0 14px 48px -14px rgba(46,230,198,.5);-webkit-mask-image:none;mask-image:none;z-index:2}#hero::before{content:none}
+    #hero{padding-top:30px;text-align:left}
+    #hero .kick{justify-content:flex-start}
+    #hero h1{font-size:clamp(27px,7vw,84px)}
+    .hero-text{max-width:none;display:flow-root}
+    .hero-copy{margin:16px 0 0}
+    .cta-row,.hero-meta{justify-content:flex-start}
+    .hero-photo{position:static;float:right;width:42%;max-width:170px;height:200px;margin:2px 0 14px 18px;border-radius:16px;opacity:1;background-size:cover;background-repeat:no-repeat;background-position:center 12%;filter:grayscale(1) contrast(1.03);border:1px solid var(--line-2);box-shadow:0 16px 44px -16px rgba(0,0,0,.75);inset:auto;-webkit-mask-image:none;mask-image:none;z-index:2}#hero::before{content:none}
     .sc-bar{flex-wrap:wrap;gap:9px}
     .sc-bar input{order:-1;flex-basis:100%}
     .sc-bar .tools{display:none}
@@ -397,9 +398,9 @@
 <main>
   <!-- HERO -->
   <section id="hero">
-    <div class="hero-photo" aria-hidden="true"></div>
     <div class="wrap">
       <div class="hero-text">
+        <div class="hero-photo" aria-hidden="true"></div>
         <span class="kick">Lead Frontend Engineer · Angular · AI Interfaces</span>
         <h1>Interfaces for the<br><span class="grad">multi-model</span> era.</h1>
         <p class="role">// Lead Frontend Engineer @ Trillo Inc. — 3+ yrs shipping production web &amp; mobile UIs</p>
