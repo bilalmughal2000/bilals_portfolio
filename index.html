@@ -345,7 +345,7 @@
     .hero-text{max-width:none;display:flow-root}
     .hero-copy{margin:16px 0 0}
     .cta-row,.hero-meta{justify-content:flex-start}
-    .hero-photo{position:static;float:right;width:42%;max-width:170px;height:200px;margin:2px 0 14px 18px;border-radius:16px;opacity:1;background-size:cover;background-repeat:no-repeat;background-position:center 12%;filter:grayscale(1) contrast(1.03);border:1px solid var(--line-2);box-shadow:0 16px 44px -16px rgba(0,0,0,.75);inset:auto;-webkit-mask-image:none;mask-image:none;z-index:2}#hero::before{content:none}
+    .hero-photo{width:100%;left:0;opacity:.32;background-size:contain;background-repeat:no-repeat;background-position:top center;filter:grayscale(1) brightness(.95) contrast(1.03);float:none;margin:0;border:none;box-shadow:none;border-radius:0;-webkit-mask-image:linear-gradient(to bottom,#000,transparent 72%);mask-image:linear-gradient(to bottom,#000,transparent 72%);z-index:1}#hero::before{content:none}
     .sc-bar{flex-wrap:wrap;gap:9px}
     .sc-bar input{order:-1;flex-basis:100%}
     .sc-bar .tools{display:none}
@@ -398,9 +398,9 @@
 <main>
   <!-- HERO -->
   <section id="hero">
+    <div class="hero-photo" aria-hidden="true"></div>
     <div class="wrap">
       <div class="hero-text">
-        <div class="hero-photo" aria-hidden="true"></div>
         <span class="kick">Lead Frontend Engineer · Angular · AI Interfaces</span>
         <h1>Interfaces for the<br><span class="grad">multi-model</span> era.</h1>
         <p class="role">// Lead Frontend Engineer @ Trillo Inc. — 3+ yrs shipping production web &amp; mobile UIs</p>
