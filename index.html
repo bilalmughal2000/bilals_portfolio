@@ -259,6 +259,11 @@
   .form-status{font-size:13px;min-height:18px;color:var(--muted);transition:color .2s ease}
   .form-status.ok{color:var(--accent)}
   .form-status.err{color:#ff8b73}
+  .spinner{display:none;width:16px;height:16px;border:2px solid rgba(6,18,15,.35);border-top-color:#06120F;border-radius:50%;animation:spin .7s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .btn.loading{pointer-events:none;opacity:.9}
+  .btn.loading .btn-arrow{display:none}
+  .btn.loading .spinner{display:inline-block}
 
   footer{border-top:1px solid var(--line);padding:30px 0}
   .foot-in{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
@@ -684,7 +689,7 @@
             </div>
             <div class="field"><label for="m">Message</label><textarea id="m" name="message" placeholder="Tell me about the role or project…" required></textarea></div>
             <div class="form-foot"><span id="formStatus" class="form-status">Sends straight to my inbox — usually a reply within a day.</span>
-              <button type="submit" class="btn btn-primary">Send Message<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+              <button type="submit" class="btn btn-primary" id="submitBtn"><span class="btn-label">Send Message</span><svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="spinner" aria-hidden="true"></span></button></div>
           </form>
         </div>
       </div>
@@ -754,8 +759,11 @@
     const body = encodeURIComponent((f.message.value || '') + '\n\n— ' + (f.name.value || '') + ' (' + (f.email.value || '') + ')');
     location.href = 'mailto:original.muhammadbilal@gmail.com?subject=' + subject + '&body=' + body;
   };
+  const submitBtn = document.getElementById('submitBtn');
+  const btnLabel = submitBtn.querySelector('.btn-label');
   form.addEventListener('submit', async (ev) => {
     ev.preventDefault();
+    submitBtn.classList.add('loading'); btnLabel.textContent = 'Sending…';
     statusEl.textContent = 'Sending…'; statusEl.className = 'form-status';
     try {
       const res = await fetch('https://api.web3forms.com/submit', { method:'POST', body: new FormData(form) });
@@ -767,6 +775,8 @@
       // network blocked (e.g. preview) or key not set yet → open the visitor's mail app instead
       statusEl.textContent = 'Opening your mail app…'; statusEl.className = 'form-status';
       mailtoFallback(form);
+    } finally {
+      submitBtn.classList.remove('loading'); btnLabel.textContent = 'Send Message';
     }
   });
 </script>
