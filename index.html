@@ -826,7 +826,7 @@
 
   const io = new IntersectionObserver((es) => {
     es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:.12});
+  }, {threshold:0, rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll('.reveal,.stagger').forEach(el => io.observe(el));
 
   const cio = new IntersectionObserver((es) => {
@@ -841,6 +841,14 @@
     });
   }, {threshold:.6});
   document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
+
+  // safety: reveal anything still hidden shortly after load (covers very tall sections)
+  addEventListener('load', () => setTimeout(() => {
+    document.querySelectorAll('.reveal:not(.in),.stagger:not(.in)').forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < innerHeight) el.classList.add('in');
+    });
+  }, 300));
 
   const links = [...document.querySelectorAll('#navlinks a')];
   const spy = new IntersectionObserver((es) => {
