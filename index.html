@@ -49,6 +49,10 @@
   .nav-links a.active::after,.nav-links a:hover::after{width:100%}
   .nav-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 17px;border-radius:11px;font-size:13.5px;font-weight:560;color:#06120F;background:linear-gradient(135deg,var(--accent),#4de0cf);transition:transform .2s ease,box-shadow .2s ease}
   .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(46,230,198,.32)}
+  .nav-actions{display:flex;align-items:center;gap:10px}
+  .nav-resume{display:inline-flex;align-items:center;gap:7px;padding:10px 15px;border-radius:11px;font-size:13.5px;font-weight:550;color:var(--text-2);border:1px solid var(--line-2);background:var(--surface);transition:color .2s ease,border-color .2s ease,transform .2s ease}
+  .nav-resume:hover{color:var(--text);border-color:var(--accent);transform:translateY(-2px)}
+  .nav-resume svg{width:15px;height:15px}
   .burger{display:none;flex-direction:column;gap:5px;align-items:center;justify-content:center;width:44px;height:44px;border:1px solid var(--line-2);border-radius:11px;background:var(--surface);cursor:pointer;padding:0}
   .burger span{width:19px;height:2px;border-radius:2px;background:var(--text);transition:transform .3s ease,opacity .2s ease}
   .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
@@ -328,7 +332,7 @@
     .hero-photo{width:72%;opacity:.4}
     .job ul{grid-template-columns:1fr}
     .contact-grid{grid-template-columns:1fr}
-    .nav-links,.navbar .nav-cta{display:none}
+    .nav-links,.navbar .nav-actions{display:none}
     .burger{display:flex}
     .mobile-menu{display:flex}
     .proj-idx{font-size:76px;top:-6px;right:16px}
@@ -386,11 +390,15 @@
     <nav class="nav-links" id="navlinks">
       <a href="#about">About</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#projects">Work</a><a href="#recognition">Recognition</a>
     </nav>
-    <a href="#contact" class="nav-cta">Let's talk<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <div class="nav-actions">
+      <a href="Muhammad-Bilal-CV.pdf" target="_blank" rel="noopener" class="nav-resume"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3v12M8 11l4 4 4-4M5 21h14"/></svg>Résumé</a>
+      <a href="#contact" class="nav-cta">Let's talk<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
   <div class="mobile-menu" id="mobileMenu">
     <a href="#about">About</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#projects">Work</a><a href="#recognition">Recognition</a>
+    <a href="Muhammad-Bilal-CV.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
     <a href="#contact" class="mm-cta">Let's talk</a>
   </div>
 </header>
