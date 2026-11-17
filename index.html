@@ -203,6 +203,8 @@
   .proj-band{display:flex;align-items:flex-start;justify-content:space-between;gap:22px;padding:clamp(26px,3.2vw,38px);border-bottom:1px solid var(--line);position:relative;z-index:1}
   .proj-idx{position:absolute;top:-6px;right:22px;font-family:var(--mono);font-weight:700;font-size:clamp(70px,10vw,128px);line-height:1;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.06);pointer-events:none;z-index:0}
   .proj-tags{flex:none;max-width:250px;display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-end}
+  .proj-media{position:relative;z-index:1;border-bottom:1px solid var(--line);background:#070910;line-height:0}
+  .proj-media video{display:block;width:100%;height:auto;aspect-ratio:16/9}
   .psi{display:grid;grid-template-columns:repeat(3,1fr);position:relative;z-index:1}
   .cell{padding:clamp(22px,2.6vw,30px);border-right:1px solid var(--line)}
   .cell:last-child{border-right:none}
@@ -584,6 +586,7 @@
             <p class="desc">A complete online store I built on my own, AI-first with Claude Code: a Next.js storefront, a React admin panel and an Express API over 38 data models — catalog, cart, coupons, checkout, order tracking and a drag-and-drop homepage builder.</p></div>
           <div class="proj-tags chips"><span class="c">Next.js 14</span><span class="c">React 18</span><span class="c">Express</span><span class="c">Prisma</span><span class="c">MySQL</span><span class="c">Redis</span><span class="c">Docker</span><span class="c">Claude Code</span></div>
         </div>
+        <div class="proj-media"><video autoplay muted loop playsinline preload="metadata" poster="media/store.jpg" aria-label="Animated demo: shopper adds items to a cart, then the admin dashboard marks the order shipped"><source src="media/store.mp4" type="video/mp4"></video></div>
         <div class="psi">
           <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>Problem</div>
             <p>A small retailer needs what the big platforms have — a fast storefront, a real admin panel, order alerts, ad tracking — without a team to build it. The hard parts are the ones customers never see: pricing that cannot be tampered with, stock that cannot oversell, sessions that cannot be stolen.</p></div>
@@ -602,6 +605,7 @@
             <p class="desc">A web console that records what AI coding agents do — every prompt, response, tool call, file and cost — and groups it into topics with the decisions made and what is still open, so a team can see why the code is the way it is.</p></div>
           <div class="proj-tags chips"><span class="c">React 19</span><span class="c">TanStack Start</span><span class="c">TanStack Query</span><span class="c">Tailwind v4</span><span class="c">CodeMirror</span><span class="c">Mermaid</span><span class="c">Vitest</span></div>
         </div>
+        <div class="proj-media"><video autoplay muted loop playsinline preload="metadata" poster="media/agent.jpg" aria-label="Animated demo: asking a question over an AI coding agent's history and getting a sourced answer"><source src="media/agent.mp4" type="video/mp4"></video></div>
         <div class="psi">
           <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>Problem</div>
             <p>Code shows what a system does, not why — and hand-written docs go stale. As more code is written by AI agents, the reasoning lives in sessions nobody can search, and it disappears when the session ends.</p></div>
@@ -620,6 +624,7 @@
             <p class="desc">A console for monitoring and governing fleets of AI agents — reliability, latency, cost, drift and audit views drawn from agent telemetry, plus a chat that answers questions about what the agents have been doing.</p></div>
           <div class="proj-tags chips"><span class="c">React 19</span><span class="c">TanStack Router</span><span class="c">TanStack Query</span><span class="c">Tailwind v4</span><span class="c">Custom SVG charts</span><span class="c">Vitest</span></div>
         </div>
+        <div class="proj-media"><video autoplay muted loop playsinline preload="metadata" poster="media/obs.jpg" aria-label="Animated demo: fleet metrics, a latency spike, and rotating a telemetry key"><source src="media/obs.mp4" type="video/mp4"></video></div>
         <div class="psi">
           <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>Problem</div>
             <p>Teams running AI agents in production could not see which agent was failing, slow or expensive — and connecting a new agent meant handling telemetry keys by hand, with no safe way to rotate them.</p></div>
@@ -638,6 +643,7 @@
             <p class="desc">One portal for a family of SaaS apps: users sign in once and reach every app they have access to, owners manage members and per-app roles, and admins manage the app catalog and pricing plans synced to Stripe.</p></div>
           <div class="proj-tags chips"><span class="c">React 19</span><span class="c">TanStack Router</span><span class="c">TanStack Query</span><span class="c">Stripe Checkout</span><span class="c">Delegated login</span><span class="c">Vitest</span></div>
         </div>
+        <div class="proj-media"><video autoplay muted loop playsinline preload="metadata" poster="media/portal.jpg" aria-label="Animated demo: inviting a member, then subscribing to a paid plan"><source src="media/portal.mp4" type="video/mp4"></video></div>
         <div class="psi">
           <div class="cell"><div class="bh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>Problem</div>
             <p>Every app had its own sign-in, members and billing. Invites broke on edge cases — wrong account, page refresh, expired session — and paid plans could not be bought until someone set them up in Stripe by hand.</p></div>
@@ -917,6 +923,9 @@
 <script>
   const rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const prog = document.getElementById('progress'), hdr = document.getElementById('hdr');
+
+  // demo videos: no autoplay for visitors who asked for reduced motion
+  if (rm) document.querySelectorAll('.proj-media video').forEach(v => { v.removeAttribute('autoplay'); v.pause(); v.controls = true; });
 
   const burger = document.getElementById('burger'), mobileMenu = document.getElementById('mobileMenu');
   const closeMenu = () => { burger.classList.remove('open'); mobileMenu.classList.remove('open'); burger.setAttribute('aria-expanded','false'); };
