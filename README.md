@@ -6,9 +6,15 @@ Single static `index.html` (no build step), plus `cv.html` and its PDF export. D
 ## Structure
 
 - `index.html` — the whole site: markup, styles and script inline.
-- `fonts/` — self-hosted variable fonts (Bricolage Grotesque, Instrument Sans, JetBrains Mono).
-- `vendor/` — GSAP 3.15 with ScrollTrigger and SplitText, loaded locally (no CDN).
+- `fonts/` — self-hosted variable fonts (Archivo with width and weight axes, JetBrains Mono).
+- `vendor/` — GSAP 3.15 (ScrollTrigger, SplitText) and Lenis 1.3 smooth scrolling, loaded locally (no CDN).
+  `lenis.min.js` is wrapped in a function scope because the published build leaks short global names.
 - `media/` — portrait, link-preview image and case-study demo videos.
+
+## Behaviour worth knowing
+
+- Case studies are an index: each row opens into the full write-up. Without JavaScript every case study is shown expanded.
+- Animation and smooth scrolling are skipped for visitors who prefer reduced motion, and demo videos get controls instead of autoplay.
 
 ## Preview locally
 
@@ -16,4 +22,4 @@ Single static `index.html` (no build step), plus `cv.html` and its PDF export. D
 python3 -m http.server 4173
 ```
 
-Then open http://127.0.0.1:4173/. Animation is skipped for visitors who prefer reduced motion, and the page stays readable if scripts fail to load.
+Then open http://127.0.0.1:4173/.
