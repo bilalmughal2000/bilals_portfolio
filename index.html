@@ -15,6 +15,7 @@
 <script>document.documentElement.classList.add("js-anim")</script>
 <meta name="theme-color" content="#F4F5FA">
 <link rel="preload" href="fonts/jakarta.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <style>
   @font-face{font-family:"Jakarta";src:url("fonts/jakarta.woff2") format("woff2");font-weight:200 800;font-display:swap}
   @font-face{font-family:"JetBrains Mono";src:url("fonts/jetbrains-mono.woff2") format("woff2");font-weight:100 800;font-display:swap}
@@ -213,33 +214,6 @@
   .fact .k{font-size:13.5px;color:var(--muted)}
   .fact .v{font-size:15px;font-weight:700}
 
-  /* ---------- skills: tabs ---------- */
-  .tabs{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:14px;margin-top:clamp(32px,4vw,52px);align-items:stretch}
-  .tab-list{display:none}
-  .js .tab-list{display:grid;gap:6px;align-content:start}
-  .tab{all:unset;box-sizing:border-box;position:relative;display:flex;align-items:center;gap:14px;padding:13px 16px;border-radius:18px;cursor:pointer;overflow:hidden;border:1px solid transparent;
-    transition:background .3s,border-color .3s,box-shadow .3s}
-  .tab:hover{background:rgba(255,255,255,.6)}
-  .tab:focus-visible{outline:2px solid var(--v);outline-offset:2px}
-  .tab[aria-selected="true"]{background:#fff;border-color:var(--line);box-shadow:var(--shadow)}
-  .tab .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex:none;background:var(--bg);color:var(--ink-2);transition:background .3s,color .3s}
-  .tab .ic svg{width:20px;height:20px}
-  .tab[aria-selected="true"] .ic{background:var(--grad);color:#fff}
-  .tab b{display:block;font-size:15.5px;font-weight:700;line-height:1.3}
-  .tab small{display:block;font-size:13px;color:var(--muted);margin-top:1px}
-  .tab .bar{position:absolute;left:16px;right:16px;bottom:0;height:2px;border-radius:2px;background:var(--grad);transform:scaleX(0);transform-origin:0 50%}
-  .tab-panels{display:grid;gap:14px}
-  .panel{position:relative;overflow:hidden;padding:clamp(26px,3.4vw,44px);min-height:100%}
-  .panel .big{position:absolute;right:-30px;bottom:-30px;width:240px;height:240px;color:var(--v);opacity:.07;pointer-events:none}
-  .panel .big svg{width:100%;height:100%}
-  .panel .pi-ic{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:var(--grad);color:#fff;margin-bottom:22px;box-shadow:0 12px 26px -10px var(--p)}
-  .panel .pi-ic svg{width:24px;height:24px}
-  .panel h3{font-size:clamp(24px,2.4vw,32px)}
-  .panel .sub{margin-top:8px;font-size:15.5px;color:var(--muted)}
-  .panel .chips{margin-top:28px;gap:10px}
-  .panel .c{font-size:15px;padding:12px 17px;border-radius:12px;background:var(--bg);border-color:transparent;color:var(--ink)}
-  .panel .c:nth-child(4n+1){background:#F0ECFF}.panel .c:nth-child(4n+2){background:#FFEAF3}.panel .c:nth-child(4n+3){background:#FFF0E3}.panel .c:nth-child(4n){background:#E6F5FE}
-
   /* ---------- experience: a horizontal track ---------- */
   #experience{overflow:clip}
   .xp-track{display:grid;gap:14px}
@@ -418,6 +392,105 @@
   .foot-socials a:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
   .foot-socials svg{width:17px;height:17px}
 
+  /* ================= v5: v2 energy on the v4 palette ================= */
+  @font-face{font-family:"Archivo";src:url("fonts/archivo.woff2") format("woff2");font-weight:100 900;font-stretch:62% 125%;font-display:swap}
+  :root{--display:"Archivo","Jakarta",system-ui,sans-serif;--night:#11122A}
+  h2{font-family:var(--display);font-weight:850;font-stretch:108%;text-transform:uppercase;letter-spacing:-.02em;line-height:.94;font-size:clamp(32px,4.8vw,72px)}
+  .sec-head{grid-template-columns:minmax(0,1fr);gap:16px}
+  .sec-head h2{max-width:20ch}
+  .sec-head .lead{max-width:62ch}
+  .star{clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)}
+
+  /* preloader */
+  .pre{display:none}
+  .js-anim .pre{position:fixed;inset:0;z-index:300;background:var(--night);color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:var(--gutter)}
+  .pre span{font-weight:600;font-size:15px;opacity:.8}
+  .pre b{font-family:var(--display);font-weight:900;font-stretch:125%;font-size:clamp(96px,24vw,380px);line-height:.8;letter-spacing:-.04em;align-self:flex-end;font-variant-numeric:tabular-nums;
+    background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+
+  /* cursor ring */
+  .cursor{position:fixed;left:0;top:0;z-index:250;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;border:2px solid #fff;mix-blend-mode:difference;pointer-events:none;
+    display:grid;place-items:center;font-size:11.5px;font-weight:700;color:transparent;opacity:0;transition:width .35s var(--ease),height .35s var(--ease),margin .35s var(--ease),background .25s,color .2s,opacity .3s}
+  .cursor.on{opacity:1}
+  .cursor.big{width:84px;height:84px;margin:-42px 0 0 -42px;background:#fff;color:#000}
+
+  /* hero: kinetic headline over a bento */
+  #hero{--wdth:100;padding-top:100px;overflow:clip}
+  #hero > .wrap:first-child .kick{margin-bottom:clamp(16px,2vw,26px)}
+  #hero h1{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(38px,7.4vw,124px);line-height:.88;letter-spacing:-.035em;
+    font-variation-settings:"wdth" var(--wdth);padding-inline:var(--gutter);margin:0 auto clamp(26px,3.4vw,48px);max-width:calc(var(--maxw) + 320px)}
+  #hero h1 .hline{display:block;white-space:nowrap;will-change:transform;padding-block:.03em}
+  .t-main{grid-column:1 / span 7;grid-row:1}
+  .t-main .role{margin-top:0}
+  .t-stats{grid-column:1 / span 7;grid-row:2}
+  .t-stats .hero-meta{grid-template-columns:minmax(0,.75fr) minmax(0,.9fr) minmax(0,1.5fr);gap:20px}
+  .t-stats .hero-meta b{white-space:nowrap}
+  .t-stats .hero-meta>div{border-top:0;padding:0}
+  .photo-card{grid-column:8 / span 5;grid-row:1 / span 2;position:relative;z-index:2;align-self:start;margin:6px clamp(16px,3.4vw,52px) 0 clamp(20px,3vw,44px);transform:rotate(4deg);will-change:transform}
+  .photo-card .frame{position:relative;border:clamp(6px,.6vw,9px) solid #fff;border-radius:30px;overflow:hidden;aspect-ratio:4/5;background:#1A1530;box-shadow:0 44px 90px -34px rgba(70,35,160,.6)}
+  .photo-card img{width:100%;height:100%;object-fit:cover;object-position:50% 14%}
+  .photo-card .status{left:auto;right:14px;top:14px;bottom:auto}
+  .badge{position:absolute;left:-15%;bottom:-9%;width:clamp(96px,10vw,150px);aspect-ratio:1;border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center;box-shadow:0 18px 40px -16px rgba(232,69,143,.7)}
+  .badge svg.ring{position:absolute;inset:0;width:100%;height:100%;animation:spin 14s linear infinite}
+  .badge svg.ring text{font-family:var(--sans);font-weight:700;font-size:10px;letter-spacing:.08em;text-transform:uppercase;fill:currentColor}
+  .badge svg.arrow{width:30%;height:30%}
+
+  /* scroll-driven demo */
+  .demo-sec{padding-block:clamp(36px,6vw,90px) clamp(20px,3vw,40px)}
+  .demo-sec .t-demo{max-width:1100px;margin:0 auto}
+
+  /* crossing ribbons */
+  .ribbons{position:relative;padding-block:clamp(56px,8vw,130px);overflow:clip}
+  .ribbon{padding-block:clamp(12px,1.3vw,20px);margin-inline:-4vw;box-shadow:0 22px 44px -26px rgba(60,30,140,.5)}
+  .ribbon.a{background:var(--grad);color:#fff;transform:rotate(-3.5deg)}
+  .ribbon.b{background:var(--night);color:#fff;transform:rotate(2.5deg);margin-top:clamp(-52px,-4vw,-24px)}
+  .ribbon .mrow{display:flex;width:max-content;gap:0}
+  .ribbon .mchip{display:inline-flex;align-items:center;gap:clamp(16px,2vw,34px);padding:0 clamp(16px,2vw,34px) 0 0;border-radius:0;background:none;color:inherit;
+    font-family:var(--display);font-weight:900;font-stretch:112%;text-transform:uppercase;font-size:clamp(26px,4.4vw,70px);line-height:1;letter-spacing:-.02em}
+  .ribbon .mchip .d{width:.38em;height:.38em;border-radius:0;background:currentColor;clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)}
+
+  /* skills: a stack of cards */
+  .skill-grid{margin-top:clamp(36px,4vw,56px);display:grid;gap:clamp(16px,2vw,24px)}
+  .skill{--i:0;position:sticky;top:calc(88px + var(--i) * 14px);display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto 1fr;column-gap:clamp(16px,2vw,28px);
+    min-height:clamp(240px,34vh,340px);padding:clamp(24px,3vw,44px);border-radius:32px;background:#fff;color:var(--ink);border:1px solid var(--line);box-shadow:0 30px 60px -36px rgba(40,25,110,.45);transform-origin:50% 0;will-change:transform}
+  .skill:nth-child(2){--i:1;background:var(--night);color:#fff;border-color:var(--night)}
+  .skill:nth-child(3){--i:2;background:#EEE9FF}
+  .skill:nth-child(4){--i:3;background:var(--grad);color:#fff;border-color:transparent}
+  .skill:nth-child(5){--i:4;background:#FFEEDD}
+  .skill:nth-child(6){--i:5;background:#E3F4FE}
+  .skill .ic{grid-row:1 / span 2;width:clamp(52px,5vw,72px);height:clamp(52px,5vw,72px);border-radius:20px;display:grid;place-items:center;background:var(--grad);color:#fff;box-shadow:0 12px 26px -12px var(--p)}
+  .skill:nth-child(2) .ic,.skill:nth-child(4) .ic{background:rgba(255,255,255,.16);box-shadow:none}
+  .skill .ic svg{width:44%;height:44%}
+  .skill h3{font-family:var(--display);font-weight:850;font-stretch:108%;text-transform:uppercase;font-size:clamp(26px,3.6vw,56px);letter-spacing:-.02em;line-height:.95;align-self:end}
+  .skill .sub{grid-column:2;margin-top:8px;font-size:clamp(15px,1.2vw,18px);opacity:.78}
+  .skill .chips{grid-column:1 / -1;align-self:end;margin-top:clamp(20px,3vw,40px);gap:8px}
+  .skill .c{font-size:clamp(13.5px,1.1vw,16px);padding:10px 15px;border-radius:12px;background:rgba(255,255,255,.75);border-color:transparent;color:var(--ink)}
+  .skill:nth-child(1) .c{background:var(--bg)}
+  .skill:nth-child(2) .c,.skill:nth-child(4) .c{background:rgba(255,255,255,.14);color:#fff}
+
+  /* recognition: dealt cards */
+  .rec{transform:rotate(-2deg)}
+  .rec:nth-child(1){background:var(--night);color:#fff;border-color:var(--night)}
+  .rec:nth-child(2){transform:rotate(1.5deg);background:var(--grad);color:#fff;border-color:transparent}
+  .rec:nth-child(3){transform:rotate(-1deg)}
+  .rec:nth-child(4){transform:rotate(2deg);background:#EEE9FF}
+  .rec::before{display:none}
+  .rec h3{font-family:var(--display);font-weight:850;font-stretch:106%;text-transform:uppercase;font-size:clamp(19px,1.7vw,24px);line-height:1}
+  .rh .ic{margin-top:0}
+  .rec:nth-child(1) .ic,.rec:nth-child(2) .ic{background:rgba(255,255,255,.14);color:#fff;box-shadow:none}
+  .rec:nth-child(1) .rmeta,.rec:nth-child(2) .rmeta{color:rgba(255,255,255,.78)}
+  .rec:nth-child(1) p,.rec:nth-child(2) p{color:rgba(255,255,255,.88)}
+  @media (hover:hover){.rec:hover{transform:rotate(0deg)}}
+
+  /* contact + footer */
+  #contact h2{font-size:clamp(34px,5.4vw,84px)}
+  footer{overflow:clip;padding-top:clamp(30px,5vw,70px)}
+  .foot-mark{display:flex;width:max-content;will-change:transform;margin-bottom:clamp(20px,3vw,40px)}
+  .foot-mark span{display:inline-flex;align-items:center;gap:.2em;padding-right:.2em;font-family:var(--display);font-weight:900;font-stretch:118%;text-transform:uppercase;
+    font-size:clamp(56px,11vw,210px);line-height:.85;letter-spacing:-.035em;white-space:nowrap;color:var(--ink)}
+  .foot-mark span::after{content:"";width:.32em;height:.32em;flex:none;background:var(--grad);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)}
+  .foot-mark span:nth-child(even){color:transparent;-webkit-text-stroke:2px var(--ink)}
+
   /* ---------- load state ---------- */
   .js-anim [data-load]{visibility:hidden}
 
@@ -479,12 +552,44 @@
     .mrow{flex-wrap:wrap;width:auto}
     .mrow.r1 .mchip:nth-child(n+10),.mrow.r2 .mchip:nth-child(n+11){display:none}
   }
+  /* v5 responsive */
+  @media (max-width:999px){
+    #hero h1{font-size:clamp(36px,10.6vw,100px);line-height:.92}
+    #hero h1 .hline{white-space:normal}
+    .t-main,.t-stats{grid-column:1 / -1;grid-row:auto}
+    .photo-card{grid-column:1 / -1;grid-row:auto;order:-1;justify-self:center;width:min(68%,330px);margin:0 0 14px}
+    .t-stats{order:2}
+    .cursor{display:none}
+  }
+  @media (max-width:640px){
+    .skill{position:relative;top:auto;min-height:0}
+    .skill{grid-template-columns:minmax(0,1fr)}
+    .skill .ic{grid-row:auto;margin-bottom:16px}
+    .skill .sub{grid-column:1}
+    .skill h3{font-size:clamp(22px,7vw,34px)}
+    .t-stats .hero-meta{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+    .t-stats .hero-meta>div:last-child{grid-column:1 / -1}
+    .badge{left:-12%;bottom:-6%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .ribbon{transform:none !important;margin:0 !important;padding-inline:var(--gutter)}
+    .ribbon .mrow{flex-wrap:wrap;width:auto;row-gap:8px}
+    .ribbon.a .mchip:nth-child(n+10),.ribbon.b .mchip:nth-child(n+11){display:none}
+    .ribbon .mchip{font-size:clamp(20px,2.8vw,36px)}
+    .foot-mark{width:auto}
+    .foot-mark span:nth-child(n+2){display:none}
+    .foot-mark span{font-size:11vw;padding-inline:var(--gutter)}
+    .skill{position:relative;top:auto}
+    .cursor{display:none}
+  }
 </style>
 </head>
 <body>
 
 <a class="skip" href="#main">Skip to content</a>
 <div class="mesh" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<div class="pre" id="pre" aria-hidden="true"><span>Muhammad Bilal</span><b id="preNum">0</b></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
 
 <header class="topbar" id="topbar">
   <div class="wrap">
@@ -499,12 +604,12 @@
 <nav class="dock" aria-label="Sections"><span class="dock-ind" aria-hidden="true"></span><a href="#about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>About</span></a><a href="#skills"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m12 3 2.6 5.6L20 11l-5.4 2.4L12 19l-2.6-5.6L4 11l5.4-2.4z"/></svg><span>Skills</span></a><a href="#experience"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg><span>Experience</span></a><a href="#projects"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Work</span></a><a href="#recognition"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 14 7 22l5-3 5 3-1.5-8"/></svg><span>Recognition</span></a><a href="#contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span>Contact</span></a></nav>
 
 <main id="main">
-  <!-- HERO: a bento of tiles -->
+  <!-- HERO -->
   <section id="hero">
+    <div class="wrap"><span class="kick" data-load>Senior Frontend &amp; AI Engineer · React · Angular · Next.js</span></div>
+    <h1 id="heroTitle"><span class="hline hl1">Interfaces for the</span><span class="hline hl2"><span class="grad">multi-model</span> era.</span></h1>
     <div class="wrap hero-bento">
       <div class="tile t-main" data-load>
-        <span class="kick">Senior Frontend &amp; AI Engineer · React · Angular · Next.js</span>
-        <h1 id="heroTitle">Interfaces for the<br><span class="grad">multi-model</span> era.</h1>
         <p class="role">// Senior Frontend &amp; AI Engineer — 4+ yrs shipping production web &amp; mobile products</p>
         <p class="hero-copy">I build AI-native products in React, Angular &amp; React Native — agent consoles, multi-model workspaces, sign-on and billing — and I build them AI-first with Claude Code, taking features from spec to tested release. Obsessed with the details users actually feel: speed, clarity and polish.</p>
         <div class="cta-row">
@@ -512,8 +617,26 @@
           <a href="#contact" class="btn btn-ghost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Get in touch</a>
         </div>
       </div>
-      <figure class="tile t-photo" data-load><img src="media/portrait.jpg" alt="Portrait of Muhammad Bilal" width="791" height="900" fetchpriority="high"><figcaption class="status"><i aria-hidden="true"></i>Open to remote roles</figcaption></figure>
-      <div class="tile t-demo" data-load>
+      <figure class="photo-card" data-load>
+        <div class="frame"><img src="media/portrait.jpg" alt="Portrait of Muhammad Bilal" width="791" height="900" fetchpriority="high"><figcaption class="status"><i aria-hidden="true"></i>Open to remote roles</figcaption></div>
+        <div class="badge" aria-hidden="true">
+          <svg class="ring" viewBox="0 0 100 100"><defs><path id="ringPath" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs><text><textPath href="#ringPath" textLength="232" lengthAdjust="spacing">Remote · Frontend &amp; AI engineering roles ·</textPath></text></svg>
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M7 17 17 7M8 7h9v9"/></svg>
+        </div>
+      </figure>
+      <div class="tile t-stats" data-load>
+        <div class="hero-meta">
+          <div><b data-count="4" data-suffix="+">4+</b><span>Years shipping products</span></div>
+          <div><b data-count="11" data-suffix="">11</b><span>Case studies below</span></div>
+          <div><b>Web · Mobile · AI</b><span>React · Angular · RN</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE DEMO -->
+  <div class="demo-sec" id="demo">
+    <div class="wrap"><div class="tile t-demo">
 <div class="showcase" id="showcase" aria-hidden="true">
         <div class="sc-bar">
           <svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 12 5 5L20 7"/></svg>
@@ -531,26 +654,20 @@
             <div class="ln" style="width:97%"></div><div class="ln" style="width:82%"></div><div class="ln" style="width:70%"></div><div class="ln" style="width:55%"></div></div>
         </div>
       </div>
-      </div>
-      <div class="tile t-stats" data-load>
-        <div class="hero-meta">
-          <div><b data-count="4" data-suffix="+">4+</b><span>Years shipping products</span></div>
-          <div><b data-count="11" data-suffix="">11</b><span>Case studies below</span></div>
-          <div><b>Web · Mobile · AI</b><span>React · Angular · RN</span></div>
-        </div>
-      </div>
-      <div class="tile t-stack" data-load aria-hidden="true">
-    <div class="mrow r1">
+    </div></div>
+  </div>
+
+  <!-- RIBBONS -->
+  <div class="ribbons" aria-hidden="true">
+    <div class="ribbon a"><div class="mrow r1">
       <span class="mchip"><span class="d"></span>React 19</span><span class="mchip"><span class="d"></span>Angular 18</span><span class="mchip"><span class="d"></span>TypeScript</span><span class="mchip"><span class="d"></span>TanStack</span><span class="mchip"><span class="d"></span>RxJS</span><span class="mchip"><span class="d"></span>NgRx</span><span class="mchip"><span class="d"></span>Signals</span><span class="mchip"><span class="d"></span>React Native</span><span class="mchip"><span class="d"></span>Tailwind CSS</span>
       <span class="mchip"><span class="d"></span>React 19</span><span class="mchip"><span class="d"></span>Angular 18</span><span class="mchip"><span class="d"></span>TypeScript</span><span class="mchip"><span class="d"></span>TanStack</span><span class="mchip"><span class="d"></span>RxJS</span><span class="mchip"><span class="d"></span>NgRx</span><span class="mchip"><span class="d"></span>Signals</span><span class="mchip"><span class="d"></span>React Native</span><span class="mchip"><span class="d"></span>Tailwind CSS</span>
-    </div>
-    <div class="mrow r2">
+    </div></div>
+    <div class="ribbon b"><div class="mrow r2">
       <span class="mchip"><span class="d"></span>Claude Code</span><span class="mchip"><span class="d"></span>AI Agents</span><span class="mchip"><span class="d"></span>Streaming UI</span><span class="mchip"><span class="d"></span>Stripe</span><span class="mchip"><span class="d"></span>OAuth / PKCE</span><span class="mchip"><span class="d"></span>Firebase</span><span class="mchip"><span class="d"></span>Vitest</span><span class="mchip"><span class="d"></span>Docker</span><span class="mchip"><span class="d"></span>Terraform</span><span class="mchip"><span class="d"></span>REST APIs</span>
       <span class="mchip"><span class="d"></span>Claude Code</span><span class="mchip"><span class="d"></span>AI Agents</span><span class="mchip"><span class="d"></span>Streaming UI</span><span class="mchip"><span class="d"></span>Stripe</span><span class="mchip"><span class="d"></span>OAuth / PKCE</span><span class="mchip"><span class="d"></span>Firebase</span><span class="mchip"><span class="d"></span>Vitest</span><span class="mchip"><span class="d"></span>Docker</span><span class="mchip"><span class="d"></span>Terraform</span><span class="mchip"><span class="d"></span>REST APIs</span>
-    </div>
-      </div>
-    </div>
-  </section>
+    </div></div>
+  </div>
 
   <!-- ABOUT -->
   <section id="about">
@@ -587,23 +704,38 @@
   <!-- SKILLS -->
   <section id="skills">
     <div class="wrap">
-      <div class="sec-head"><span class="kick">Skills</span><h2>A toolkit for building<br>interfaces people trust.</h2><p class="lead">Grouped by what they actually do — not by buzzword count. Everything here has shipped in production web or mobile apps.</p></div>
-      <div class="tabs">
-        <div class="tab-list" role="tablist" aria-label="Skill groups" aria-orientation="vertical">
-          <button type="button" class="tab" role="tab" id="sk-t1" aria-controls="sk-p1" aria-selected="true"><span class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m8 6-6 6 6 6M16 6l6 6-6 6"/></svg></span><span><b>Frontend Core</b><small>The frameworks I build with daily</small></span><i class="bar" aria-hidden="true"></i></button>
-          <button type="button" class="tab" role="tab" id="sk-t2" aria-controls="sk-p2" aria-selected="false"><span class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span><span><b>Backend, Auth &amp; Payments</b><small>The parts every real product needs</small></span><i class="bar" aria-hidden="true"></i></button>
-          <button type="button" class="tab" role="tab" id="sk-t3" aria-controls="sk-p3" aria-selected="false"><span class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="3.4"/></svg></span><span><b>AI Engineering</b><small>Building AI products — and building with AI</small></span><i class="bar" aria-hidden="true"></i></button>
-          <button type="button" class="tab" role="tab" id="sk-t4" aria-controls="sk-p4" aria-selected="false"><span class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9M4 20V4h11l5 5v3"/><path d="M14 4v5h5"/></svg></span><span><b>UI, Styling &amp; Performance</b><small>Pixel-honest, accessible, fast</small></span><i class="bar" aria-hidden="true"></i></button>
-          <button type="button" class="tab" role="tab" id="sk-t5" aria-controls="sk-p5" aria-selected="false"><span class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17.5 19a4.5 4.5 0 0 0 .5-8.97A6 6 0 0 0 6.34 9 4.5 4.5 0 0 0 7 18h1"/><path d="M12 12v9M9 15l3-3 3 3"/></svg></span><span><b>DevOps &amp; Cloud</b><small>Getting builds live and keeping them healthy</small></span><i class="bar" aria-hidden="true"></i></button>
-          <button type="button" class="tab" role="tab" id="sk-t6" aria-controls="sk-p6" aria-selected="false"><span class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3v12M18 9v12"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg></span><span><b>Workflow &amp; Leadership</b><small>How the work ships, at team scale</small></span><i class="bar" aria-hidden="true"></i></button>
+      <div class="sec-head"><span class="kick">Skills</span><h2>A toolkit for building<br>interfaces people trust.</h2>
+      <p class="lead">Grouped by what they actually do — not by buzzword count. Everything here has shipped in production web or mobile apps.</p></div>
+      <div class="skill-grid">
+        <div class="skill">
+          <span class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m8 6-6 6 6 6M16 6l6 6-6 6"/></svg></span>
+          <h3>Frontend Core</h3><p class="sub">The frameworks I build with daily</p>
+          <div class="chips"><span class="c">React 19</span><span class="c">Angular 18</span><span class="c">Next.js</span><span class="c">TypeScript</span><span class="c">TanStack</span><span class="c">React Native</span><span class="c">RxJS</span></div>
         </div>
-        <div class="tab-panels">
-          <div class="panel" role="tabpanel" id="sk-p1" aria-labelledby="sk-t1" tabindex="0"><span class="big" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m8 6-6 6 6 6M16 6l6 6-6 6"/></svg></span><span class="pi-ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m8 6-6 6 6 6M16 6l6 6-6 6"/></svg></span><h3>Frontend Core</h3><p class="sub">The frameworks I build with daily</p><div class="chips"><span class="c">React 19</span><span class="c">Angular 18</span><span class="c">Next.js</span><span class="c">TypeScript</span><span class="c">TanStack</span><span class="c">React Native</span><span class="c">RxJS</span></div></div>
-          <div class="panel" role="tabpanel" id="sk-p2" aria-labelledby="sk-t2" tabindex="0"><span class="big" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span><span class="pi-ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span><h3>Backend, Auth &amp; Payments</h3><p class="sub">The parts every real product needs</p><div class="chips"><span class="c">Node · Express</span><span class="c">Prisma · MySQL</span><span class="c">Redis</span><span class="c">OAuth / PKCE</span><span class="c">SSO · MFA</span><span class="c">Stripe</span><span class="c">Plaid</span></div></div>
-          <div class="panel" role="tabpanel" id="sk-p3" aria-labelledby="sk-t3" tabindex="0"><span class="big" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="3.4"/></svg></span><span class="pi-ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="3.4"/></svg></span><h3>AI Engineering</h3><p class="sub">Building AI products — and building with AI</p><div class="chips"><span class="c">Claude Code</span><span class="c">AI-assisted (vibe) coding</span><span class="c">AI agents</span><span class="c">Multi-model UX</span><span class="c">Streaming</span><span class="c">Dictation</span><span class="c">RAG</span></div></div>
-          <div class="panel" role="tabpanel" id="sk-p4" aria-labelledby="sk-t4" tabindex="0"><span class="big" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9M4 20V4h11l5 5v3"/><path d="M14 4v5h5"/></svg></span><span class="pi-ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9M4 20V4h11l5 5v3"/><path d="M14 4v5h5"/></svg></span><h3>UI, Styling &amp; Performance</h3><p class="sub">Pixel-honest, accessible, fast</p><div class="chips"><span class="c">Tailwind CSS</span><span class="c">Lazy loading</span><span class="c">Code splitting</span><span class="c">Vitest</span><span class="c">WCAG / a11y</span></div></div>
-          <div class="panel" role="tabpanel" id="sk-p5" aria-labelledby="sk-t5" tabindex="0"><span class="big" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17.5 19a4.5 4.5 0 0 0 .5-8.97A6 6 0 0 0 6.34 9 4.5 4.5 0 0 0 7 18h1"/><path d="M12 12v9M9 15l3-3 3 3"/></svg></span><span class="pi-ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17.5 19a4.5 4.5 0 0 0 .5-8.97A6 6 0 0 0 6.34 9 4.5 4.5 0 0 0 7 18h1"/><path d="M12 12v9M9 15l3-3 3 3"/></svg></span><h3>DevOps &amp; Cloud</h3><p class="sub">Getting builds live and keeping them healthy</p><div class="chips"><span class="c">Docker</span><span class="c">Cloud Build</span><span class="c">Vercel</span><span class="c">Terraform</span><span class="c">Scale workloads ↑ / ↓</span><span class="c">Deploy versioning</span></div></div>
-          <div class="panel" role="tabpanel" id="sk-p6" aria-labelledby="sk-t6" tabindex="0"><span class="big" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3v12M18 9v12"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg></span><span class="pi-ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3v12M18 9v12"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg></span><h3>Workflow &amp; Leadership</h3><p class="sub">How the work ships, at team scale</p><div class="chips"><span class="c">Git · GitHub</span><span class="c">Bitbucket</span><span class="c">Jira / Agile</span><span class="c">Code Review</span><span class="c">Release ownership</span></div></div>
+        <div class="skill">
+          <span class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span>
+          <h3>Backend, Auth &amp; Payments</h3><p class="sub">The parts every real product needs</p>
+          <div class="chips"><span class="c">Node · Express</span><span class="c">Prisma · MySQL</span><span class="c">Redis</span><span class="c">OAuth / PKCE</span><span class="c">SSO · MFA</span><span class="c">Stripe</span><span class="c">Plaid</span></div>
+        </div>
+        <div class="skill">
+          <span class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="3.4"/></svg></span>
+          <h3>AI Engineering</h3><p class="sub">Building AI products — and building with AI</p>
+          <div class="chips"><span class="c">Claude Code</span><span class="c">AI-assisted (vibe) coding</span><span class="c">AI agents</span><span class="c">Multi-model UX</span><span class="c">Streaming</span><span class="c">Dictation</span><span class="c">RAG</span></div>
+        </div>
+        <div class="skill">
+          <span class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9M4 20V4h11l5 5v3"/><path d="M14 4v5h5"/></svg></span>
+          <h3>UI, Styling &amp; Performance</h3><p class="sub">Pixel-honest, accessible, fast</p>
+          <div class="chips"><span class="c">Tailwind CSS</span><span class="c">Lazy loading</span><span class="c">Code splitting</span><span class="c">Vitest</span><span class="c">WCAG / a11y</span></div>
+        </div>
+        <div class="skill">
+          <span class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17.5 19a4.5 4.5 0 0 0 .5-8.97A6 6 0 0 0 6.34 9 4.5 4.5 0 0 0 7 18h1"/><path d="M12 12v9M9 15l3-3 3 3"/></svg></span>
+          <h3>DevOps &amp; Cloud</h3><p class="sub">Getting builds live and keeping them healthy</p>
+          <div class="chips"><span class="c">Docker</span><span class="c">Cloud Build</span><span class="c">Vercel</span><span class="c">Terraform</span><span class="c">Scale workloads ↑ / ↓</span><span class="c">Deploy versioning</span></div>
+        </div>
+        <div class="skill">
+          <span class="ic"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3v12M18 9v12"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg></span>
+          <h3>Workflow &amp; Leadership</h3><p class="sub">How the work ships, at team scale</p>
+          <div class="chips"><span class="c">Git · GitHub</span><span class="c">Bitbucket</span><span class="c">Jira / Agile</span><span class="c">Code Review</span><span class="c">Release ownership</span></div>
         </div>
       </div>
     </div>
@@ -997,6 +1129,7 @@
   </section>
 
   <footer>
+    <div class="foot-mark" aria-hidden="true"><span>Muhammad Bilal</span><span>Muhammad Bilal</span><span>Muhammad Bilal</span><span>Muhammad Bilal</span><span>Muhammad Bilal</span><span>Muhammad Bilal</span></div>
     <div class="wrap foot-in">
       <span>© 2026 Muhammad Bilal · Senior Frontend &amp; AI Engineer</span>
       <span class="mono">Designed &amp; built AI-first · React &amp; Angular</span>
@@ -1072,41 +1205,6 @@
     vids.forEach(v => vio.observe(v));
   }
 
-  /* ---------- skills: tabs with auto-advance ---------- */
-  const tabs = $$('#skills [role="tab"]'), panels = $$('#skills [role="tabpanel"]');
-  let tabIdx = 0, autoOn = animate, tabsInView = false, barTween = null;
-  const runBar = () => {
-    if (!animate) return;
-    if (barTween) barTween.kill();
-    tabs.forEach(t => gsap.set($('.bar', t), {scaleX:0}));
-    if (!autoOn) return;
-    barTween = gsap.to($('.bar', tabs[tabIdx]), {scaleX:1, duration:5, ease:'none', paused:!tabsInView, onComplete:() => selectTab(tabIdx + 1)});
-  };
-  const stopAuto = () => { autoOn = false; if (barTween) barTween.kill(); if (animate) tabs.forEach(t => gsap.set($('.bar', t), {scaleX:0})); };
-  const selectTab = (i, {focus = false, user = false, quiet = false} = {}) => {
-    tabIdx = (i + tabs.length) % tabs.length;
-    tabs.forEach((t, k) => { const on = k === tabIdx; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; panels[k].hidden = !on; });
-    if (focus) tabs[tabIdx].focus();
-    if (user) stopAuto();
-    if (animate && !quiet) {
-      const p = panels[tabIdx];
-      gsap.fromTo(p, {autoAlpha:0, y:18}, {autoAlpha:1, y:0, duration:.55, ease:'power3.out'});
-      gsap.fromTo($$('.c', p), {autoAlpha:0, scale:.8}, {autoAlpha:1, scale:1, duration:.45, ease:'back.out(2)', stagger:.035, delay:.1});
-      gsap.fromTo($('.pi-ic', p), {rotation:-30, scale:.6}, {rotation:0, scale:1, duration:.7, ease:'back.out(2)'});
-    }
-    runBar();
-  };
-  tabs.forEach((t, i) => {
-    t.addEventListener('click', () => selectTab(i, {user:true}));
-    t.addEventListener('keydown', (e) => {
-      const map = {ArrowDown:1, ArrowRight:1, ArrowUp:-1, ArrowLeft:-1};
-      if (map[e.key]) { e.preventDefault(); selectTab(tabIdx + map[e.key], {focus:true, user:true}); }
-      else if (e.key === 'Home') { e.preventDefault(); selectTab(0, {focus:true, user:true}); }
-      else if (e.key === 'End') { e.preventDefault(); selectTab(tabs.length - 1, {focus:true, user:true}); }
-    });
-  });
-  if (tabs.length) selectTab(0, {quiet:true});
-
   /* ---------- projects: console ---------- */
   const items = $$('.pc-item'), panes = $$('.pc-stage .proj'), pcFile = $('#pcFile'), pcList = $('.pc-list');
   let cur = 0;
@@ -1158,40 +1256,73 @@
       gsap.ticker.lagSmoothing(0);
     }
 
-    /* hero: bento tiles assemble */
-    const tiles = $$('.hero-bento .tile');
+    /* preloader counts up, wipes away, the hero assembles */
+    const pre = $('#pre'), preNum = $('#preNum'), count = {n:0}, hero = $('#hero');
+    const tiles = $$('.hero-bento [data-load]');
     gsap.set(tiles, {autoAlpha:0});
-    const intro = gsap.timeline({delay:.1});
-    intro.from('.topbar .wrap > *', {y:-30, autoAlpha:0, duration:.7, stagger:.08})
-      .from('.dock', {y:90, autoAlpha:0, duration:.9, ease:'back.out(1.4)'}, 0.15)
-      .fromTo(tiles, {autoAlpha:0, y:40, scale:.95}, {autoAlpha:1, y:0, scale:1, duration:1, stagger:.1}, .1)
-      .from('#hero .t-photo img', {scale:1.3, duration:1.6}, .25);
-    SplitText.create('#heroTitle', {type:'lines', mask:'lines', autoSplit:true,
-      onSplit(self) { return gsap.from(self.lines, {yPercent:105, duration:1, ease:'power4.out', stagger:.12, delay:.45}); }});
-    gsap.to('#hero .t-photo img', {yPercent:-8, ease:'none', scrollTrigger:{trigger:'#hero', start:'top top', end:'bottom top', scrub:true}});
+    gsap.set('#hero .kick', {autoAlpha:0, y:20});
+    const intro = gsap.timeline({onComplete:() => pre && pre.remove()});
+    intro.to(count, {n:100, duration:1, ease:'power2.inOut', onUpdate:() => { preNum.textContent = Math.round(count.n); }})
+      .to(pre, {yPercent:-100, duration:.9, ease:'power4.inOut'}, '>-.05')
+      .from('#heroTitle .hline', {yPercent:110, autoAlpha:0, duration:1.1, ease:'power4.out', stagger:.12}, '<+.35')
+      .fromTo(hero, {'--wdth':66}, {'--wdth':100, duration:1.5}, '<')
+      .to('#hero .kick', {autoAlpha:1, y:0, duration:.7}, '<+.15')
+      .fromTo(tiles, {autoAlpha:0, y:40, scale:.96}, {autoAlpha:1, y:0, scale:1, duration:1, stagger:.1}, '<+.1')
+      .from('.photo-card .frame, .photo-card .badge', {y:220, rotation:-18, scale:.6, autoAlpha:0, duration:1.2, ease:'back.out(1.4)', stagger:.1}, '<')
+      .from('.topbar .wrap > *', {y:-30, autoAlpha:0, duration:.7, stagger:.08}, '<')
+      .from('.dock', {y:90, autoAlpha:0, duration:.9, ease:'back.out(1.4)'}, '<+.1');
 
-    /* hero: live multi-model demo loop */
-    const sc = $('#showcase'), input = $('input', sc), full = input.value, cols = $$('.col', sc), typed = {n:0};
-    const demo = gsap.timeline({repeat:-1, repeatDelay:1.2, paused:true, defaults:{ease:'power2.out'}});
-    demo.set(input, {value:''}).set(typed, {n:0}).set(sc, {'--fan':0}).set(cols, {'--on':0}).set($$('.ln', sc), {scaleX:0}).set($$('.tag', sc), {autoAlpha:0})
-      .to(typed, {n:full.length, duration:1.5, ease:'none', onUpdate() { input.value = full.slice(0, Math.round(typed.n)); }}, .3)
-      .to('.send', {scale:.84, duration:.12, yoyo:true, repeat:1}, '>+.15')
-      .to(sc, {'--fan':1, duration:.6}, '>')
-      .to(cols, {'--on':1, duration:.5, stagger:.12}, '<+.1')
-      .to($$('.tag', sc), {autoAlpha:1, duration:.3, stagger:.12}, '<');
-    cols.forEach((c, i) => demo.to($$('.ln', c), {scaleX:1, duration:.9, stagger:.22, ease:'power1.out'}, 2.9 + i * .18));
-    demo.to({}, {duration:2.2});
-    ScrollTrigger.create({trigger:sc, start:'top bottom', end:'bottom top', onToggle:(s) => s.isActive ? demo.play() : demo.pause()});
+    const mm = gsap.matchMedia();
+    const sc = $('#showcase'), input = $('input', sc), full = input.value, cols = $$('.col', sc), send = $('.send', sc);
+    mm.add('(min-width:1000px)', () => {
+      /* hero lines pull apart, the card drifts */
+      const st = {trigger:hero, start:'top top', end:'bottom top', scrub:.5};
+      gsap.to('.hl1', {xPercent:-10, ease:'none', scrollTrigger:st});
+      gsap.to('.hl2', {xPercent:8, ease:'none', scrollTrigger:st});
+      gsap.fromTo('.photo-card', {yPercent:0, rotation:4}, {yPercent:-12, rotation:-3, ease:'none', scrollTrigger:st});
 
-    /* hero: tech stack rows drift */
-    $$('.mrow').forEach((row, i) => {
-      const t = gsap.fromTo(row, {xPercent: i ? -50 : 0}, {xPercent: i ? 0 : -50, duration: i ? 44 : 36, ease:'none', repeat:-1});
-      ScrollTrigger.create({trigger:row, start:'top bottom', end:'bottom top', onToggle:(s) => s.isActive ? t.play() : t.pause()});
+      /* live demo pinned and driven by the scroll */
+      const typed = {n:full.length};
+      const tl = gsap.timeline({defaults:{ease:'none'}, scrollTrigger:{trigger:'#demo', start:'center center', end:'+=140%', pin:true, scrub:.6, anticipatePin:1}});
+      tl.fromTo(typed, {n:0}, {n:full.length, duration:1, onUpdate:() => { input.value = full.slice(0, Math.round(typed.n)); }})
+        .fromTo(send, {scale:1}, {scale:1.25, duration:.15, yoyo:true, repeat:1})
+        .fromTo(sc, {'--fan':0}, {'--fan':1, duration:.4})
+        .fromTo(cols, {'--on':0}, {'--on':1, duration:.4, stagger:.12}, '<')
+        .fromTo($$('.tag', sc), {autoAlpha:0}, {autoAlpha:1, duration:.2, stagger:.12}, '<');
+      cols.forEach((c, i) => tl.fromTo($$('.ln', c), {scaleX:0}, {scaleX:1, duration:.7, stagger:.2}, 1.9 + i * .16));
+      tl.to({}, {duration:.5});
+      gsap.from('#demo .t-demo', {scale:.86, y:80, ease:'none', scrollTrigger:{trigger:'#demo', start:'top bottom', end:'center center', scrub:.5}});
+      return () => { input.value = full; };
+    });
+    mm.add('(max-width:999px)', () => {
+      const typed = {n:0};
+      const demo = gsap.timeline({repeat:-1, repeatDelay:1.2, paused:true, defaults:{ease:'power2.out'}});
+      demo.set(input, {value:''}).set(typed, {n:0}).set(sc, {'--fan':0}).set(cols, {'--on':0}).set($$('.ln', sc), {scaleX:0}).set($$('.tag', sc), {autoAlpha:0})
+        .to(typed, {n:full.length, duration:1.5, ease:'none', onUpdate() { input.value = full.slice(0, Math.round(typed.n)); }}, .3)
+        .to(sc, {'--fan':1, duration:.6}, '>+.2')
+        .to(cols, {'--on':1, duration:.5, stagger:.12}, '<+.1')
+        .to($$('.tag', sc), {autoAlpha:1, duration:.3, stagger:.12}, '<');
+      cols.forEach((c, i) => demo.to($$('.ln', c), {scaleX:1, duration:.9, stagger:.22, ease:'power1.out'}, 2.6 + i * .18));
+      demo.to({}, {duration:2.2});
+      const t = ScrollTrigger.create({trigger:sc, start:'top bottom', end:'bottom top', onToggle:(s) => s.isActive ? demo.play() : demo.pause()});
+      return () => { demo.kill(); t.kill(); input.value = full; gsap.set([sc, cols, $$('.ln', sc), $$('.tag', sc)], {clearProps:'all'}); };
     });
 
-    /* section headings */
-    $$('main h2').forEach(h => SplitText.create(h, {type:'lines', mask:'lines', autoSplit:true,
-      onSplit(self) { return gsap.from(self.lines, {yPercent:105, duration:1, ease:'power4.out', stagger:.1, scrollTrigger:{trigger:h, start:'top 88%', once:true}}); }}));
+    /* ribbons and footer name: always drifting, faster with the scroll */
+    const drift = (el, dir, dur, trigger) => {
+      const t = gsap.fromTo(el, {xPercent: dir > 0 ? -50 : 0}, {xPercent: dir > 0 ? 0 : -50, duration:dur, ease:'none', repeat:-1});
+      ScrollTrigger.create({trigger, start:'top bottom', end:'bottom top',
+        onToggle:(s) => s.isActive ? t.play() : t.pause(),
+        onUpdate:(s) => { const v = Math.min(Math.abs(s.getVelocity()) / 220, 8); t.timeScale(1 + v); gsap.to(t, {timeScale:1, duration:1, ease:'power2.out', overwrite:true}); }});
+    };
+    drift('.ribbon.a .mrow', -1, 34, '.ribbons'); drift('.ribbon.b .mrow', 1, 40, '.ribbons');
+    gsap.fromTo('.ribbon.a', {rotation:-6}, {rotation:-2, ease:'none', scrollTrigger:{trigger:'.ribbons', start:'top bottom', end:'bottom top', scrub:.5}});
+    gsap.fromTo('.ribbon.b', {rotation:5}, {rotation:1, ease:'none', scrollTrigger:{trigger:'.ribbons', start:'top bottom', end:'bottom top', scrub:.5}});
+    if ($('.foot-mark')) drift('.foot-mark', -1, 30, 'footer');
+
+    /* section headings: words swing up from behind a mask */
+    $$('main h2').forEach(h => SplitText.create(h, {type:'lines,words', mask:'lines', autoSplit:true,
+      onSplit(self) { return gsap.from(self.words, {yPercent:115, rotation:5, duration:1, ease:'power4.out', stagger:.045, scrollTrigger:{trigger:h, start:'top 88%', once:true}}); }}));
     gsap.utils.toArray('.sec-head .lead, .xp-intro .lead').forEach(l => gsap.from(l, {y:20, autoAlpha:0, duration:.8, scrollTrigger:{trigger:l, start:'top 90%', once:true}}));
 
     /* about: the answer streams in */
@@ -1215,16 +1346,17 @@
     chat.addEventListener('click', () => { if (ctl.progress() > 0 && ctl.progress() < 1) ctl.progress(1); });
     gsap.from('.profile > *', {y:36, autoAlpha:0, duration:.9, stagger:.1, scrollTrigger:{trigger:'.profile', start:'top 82%', once:true}});
 
-    /* skills */
-    gsap.from('.tab', {x:-24, autoAlpha:0, duration:.7, stagger:.06, scrollTrigger:{trigger:'.tabs', start:'top 80%', once:true}});
-    gsap.from('.tab-panels', {y:40, autoAlpha:0, duration:.9, scrollTrigger:{trigger:'.tabs', start:'top 80%', once:true}});
-    ScrollTrigger.create({trigger:'.tabs', start:'top 75%', end:'bottom 25%', onToggle:(s) => { tabsInView = s.isActive; if (barTween) s.isActive ? barTween.play() : barTween.pause(); }});
-    $('.tabs').addEventListener('pointerenter', () => barTween && barTween.pause());
-    $('.tabs').addEventListener('pointerleave', () => barTween && autoOn && tabsInView && barTween.play());
-    $('.tabs').addEventListener('focusin', () => barTween && barTween.pause());
+    /* skills: cards rise, then each settles back as the next slides over it */
+    $$('.skill').forEach(card => gsap.from(card, {y:70, autoAlpha:0, duration:.9, scrollTrigger:{trigger:card, start:'top 92%', once:true}}));
+    mm.add('(min-width:641px)', () => {
+      const cards = $$('.skill');
+      cards.forEach((card, i) => {
+        if (i === cards.length - 1) return;
+        gsap.to(card, {scale:.9 + i * .012, ease:'none', scrollTrigger:{trigger:cards[i + 1], start:'top bottom', end:'top 20%', scrub:true}});
+      });
+    });
 
     /* experience: horizontal on large screens, stacked elsewhere */
-    const mm = gsap.matchMedia();
     mm.add('(min-width:1100px) and (min-height:700px)', () => {
       root.classList.add('xp-h');
       const track = $('.xp-track');
@@ -1246,25 +1378,32 @@
     gsap.from('.pc-item', {y:14, autoAlpha:0, duration:.5, stagger:.04, delay:.2, scrollTrigger:{trigger:'.console', start:'top 82%', once:true}});
     gsap.from('.pc-stage', {y:50, autoAlpha:0, duration:1, scrollTrigger:{trigger:'.console', start:'top 82%', once:true}});
 
-    /* recognition */
-    gsap.from('.rec', {y:70, rotation:(i) => (i % 2 ? 3 : -3), autoAlpha:0, duration:1, stagger:.1, clearProps:'transform', scrollTrigger:{trigger:'.rec-grid', start:'top 84%', once:true}});
+    /* recognition: cards deal in */
+    gsap.from('.rec', {y:160, rotation:(i) => (i % 2 ? 16 : -16), autoAlpha:0, duration:1.1, ease:'back.out(1.3)', stagger:.1, clearProps:'transform', scrollTrigger:{trigger:'.rec-grid', start:'top 84%', once:true}});
 
     /* contact */
     gsap.from('.contact-panel', {scale:.94, y:60, autoAlpha:0, duration:1.1, scrollTrigger:{trigger:'.contact-panel', start:'top 85%', once:true}});
     gsap.from('.cline', {x:-24, autoAlpha:0, duration:.7, stagger:.08, scrollTrigger:{trigger:'.contact-grid', start:'top 85%', once:true}});
     gsap.from('.glass:nth-child(2)', {y:50, rotation:2, autoAlpha:0, duration:1, scrollTrigger:{trigger:'.contact-grid', start:'top 85%', once:true}});
 
-    /* pointer devices: magnetic buttons, tilting portrait */
+    /* pointer devices: cursor ring, magnetic buttons, leaning portrait */
     if (finePointer) {
+      const cur = $('#cursor'), cx = gsap.quickTo(cur, 'x', {duration:.35}), cy = gsap.quickTo(cur, 'y', {duration:.35});
+      addEventListener('pointermove', (e) => { cur.classList.add('on'); cx(e.clientX); cy(e.clientY); }, {passive:true});
+      document.addEventListener('pointerleave', () => cur.classList.remove('on'));
+      $$('.pc-item').forEach(el => {
+        el.addEventListener('pointerenter', () => { cur.classList.add('big'); cur.textContent = 'Open'; });
+        el.addEventListener('pointerleave', () => { cur.classList.remove('big'); cur.textContent = ''; });
+      });
       $$('[data-magnetic]').forEach(el => {
         const xTo = gsap.quickTo(el, 'x', {duration:.5}), yTo = gsap.quickTo(el, 'y', {duration:.5});
         el.addEventListener('pointermove', (e) => { const r = el.getBoundingClientRect(); xTo((e.clientX - r.left - r.width / 2) * .28); yTo((e.clientY - r.top - r.height / 2) * .4); });
         el.addEventListener('pointerleave', () => { xTo(0); yTo(0); });
       });
-      const ph = $('.t-photo'); gsap.set(ph, {transformPerspective:1000});
-      const rx = gsap.quickTo(ph, 'rotationY', {duration:.6}), ry = gsap.quickTo(ph, 'rotationX', {duration:.6});
-      ph.addEventListener('pointermove', (e) => { const r = ph.getBoundingClientRect(); rx(((e.clientX - r.left) / r.width - .5) * 10); ry((.5 - (e.clientY - r.top) / r.height) * 8); });
-      ph.addEventListener('pointerleave', () => { rx(0); ry(0); });
+      const frame = $('.photo-card .frame'); gsap.set(frame, {transformPerspective:900});
+      const rx = gsap.quickTo(frame, 'rotationY', {duration:.6}), ry = gsap.quickTo(frame, 'rotationX', {duration:.6});
+      hero.addEventListener('pointermove', (e) => { rx((e.clientX / innerWidth - .5) * 14); ry((.5 - e.clientY / innerHeight) * 10); });
+      hero.addEventListener('pointerleave', () => { rx(0); ry(0); });
     }
 
     document.fonts && document.fonts.ready.then(() => ScrollTrigger.refresh());
