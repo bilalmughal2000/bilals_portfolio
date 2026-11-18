@@ -14,7 +14,7 @@ Single static `index.html` (no build step), plus `cv.html` and its PDF export. D
 ## Behaviour worth knowing
 
 - Light theme with a moving colour-mesh background; navigation is a dock fixed to the bottom of the screen.
-- Intro counter, kinetic headline, scroll-driven demo, crossing ribbons, stacking skill cards and a drifting footer name.
+- Intro counter, kinetic headline, scroll-driven demo, crossing ribbons and stacking skill cards.
 - About is shown as a streamed chat answer, Experience as a horizontal track on large screens, and the case studies as a console with a project list and one open study at a time.
 - Without JavaScript, every tab panel and case study is shown in full, and the case-study list links jump to each study.
 - Animation and smooth scrolling are skipped for visitors who prefer reduced motion; demo videos get controls instead of autoplay.

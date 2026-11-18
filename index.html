@@ -484,12 +484,8 @@
 
   /* contact + footer */
   #contact h2{font-size:clamp(34px,5.4vw,84px)}
-  footer{overflow:clip;padding-top:clamp(30px,5vw,70px)}
-  .foot-mark{display:flex;width:max-content;will-change:transform;margin-bottom:clamp(20px,3vw,40px)}
-  .foot-mark span{display:inline-flex;align-items:center;gap:.2em;padding-right:.2em;font-family:var(--display);font-weight:900;font-stretch:118%;text-transform:uppercase;
-    font-size:clamp(56px,11vw,210px);line-height:.85;letter-spacing:-.035em;white-space:nowrap;color:var(--ink)}
-  .foot-mark span::after{content:"";width:.32em;height:.32em;flex:none;background:var(--grad);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)}
-  .foot-mark span:nth-child(even){color:transparent;-webkit-text-stroke:2px var(--ink)}
+  footer{overflow:clip;padding-top:0}
+  #contact{padding-bottom:clamp(40px,5vw,72px)}
 
   /* ---------- load state ---------- */
   .js-anim [data-load]{visibility:hidden}
@@ -576,9 +572,6 @@
     .ribbon .mrow{flex-wrap:wrap;width:auto;row-gap:8px}
     .ribbon.a .mchip:nth-child(n+10),.ribbon.b .mchip:nth-child(n+11){display:none}
     .ribbon .mchip{font-size:clamp(20px,2.8vw,36px)}
-    .foot-mark{width:auto}
-    .foot-mark span:nth-child(n+2){display:none}
-    .foot-mark span{font-size:11vw;padding-inline:var(--gutter)}
     .skill{position:relative;top:auto}
     .cursor{display:none}
   }
@@ -1129,7 +1122,6 @@
   </section>
 
   <footer>
-    <div class="foot-mark" aria-hidden="true"><span>Muhammad Bilal</span><span>Muhammad Bilal</span><span>Muhammad Bilal</span><span>Muhammad Bilal</span><span>Muhammad Bilal</span><span>Muhammad Bilal</span></div>
     <div class="wrap foot-in">
       <span>© 2026 Muhammad Bilal · Senior Frontend &amp; AI Engineer</span>
       <span class="mono">Designed &amp; built AI-first · React &amp; Angular</span>
@@ -1308,7 +1300,7 @@
       return () => { demo.kill(); t.kill(); input.value = full; gsap.set([sc, cols, $$('.ln', sc), $$('.tag', sc)], {clearProps:'all'}); };
     });
 
-    /* ribbons and footer name: always drifting, faster with the scroll */
+    /* ribbons: always drifting, faster with the scroll */
     const drift = (el, dir, dur, trigger) => {
       const t = gsap.fromTo(el, {xPercent: dir > 0 ? -50 : 0}, {xPercent: dir > 0 ? 0 : -50, duration:dur, ease:'none', repeat:-1});
       ScrollTrigger.create({trigger, start:'top bottom', end:'bottom top',
@@ -1318,7 +1310,6 @@
     drift('.ribbon.a .mrow', -1, 34, '.ribbons'); drift('.ribbon.b .mrow', 1, 40, '.ribbons');
     gsap.fromTo('.ribbon.a', {rotation:-6}, {rotation:-2, ease:'none', scrollTrigger:{trigger:'.ribbons', start:'top bottom', end:'bottom top', scrub:.5}});
     gsap.fromTo('.ribbon.b', {rotation:5}, {rotation:1, ease:'none', scrollTrigger:{trigger:'.ribbons', start:'top bottom', end:'bottom top', scrub:.5}});
-    if ($('.foot-mark')) drift('.foot-mark', -1, 30, 'footer');
 
     /* section headings: words swing up from behind a mask */
     $$('main h2').forEach(h => SplitText.create(h, {type:'lines,words', mask:'lines', autoSplit:true,
